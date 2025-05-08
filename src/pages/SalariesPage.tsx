@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import NavBar from '../components/NavBar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -425,7 +426,7 @@ const SalariesPage = () => {
                         tickFormatter={(value) => `$${value/1000}K`} 
                         domain={[0, 'dataMax + 20000']}
                       />
-                      <Tooltip content={<CustomTooltip />} />
+                      <Tooltip content={(props) => <CustomTooltip {...props} />} />
                       <Bar dataKey="salary" fill="#0A66C2" />
                     </BarChart>
                   </ResponsiveContainer>
@@ -527,7 +528,7 @@ const SalariesPage = () => {
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis type="number" tickFormatter={(value) => `$${value/1000}K`} />
                       <YAxis dataKey="name" type="category" width={80} />
-                      <Tooltip content={<CustomTooltip />} />
+                      <Tooltip content={(props) => <CustomTooltip {...props} />} />
                       <Bar dataKey="salary" fill="#0A66C2" />
                     </BarChart>
                   </ResponsiveContainer>
@@ -581,7 +582,7 @@ const SalariesPage = () => {
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis type="number" tickFormatter={(value) => `$${value/1000}K`} />
                       <YAxis dataKey="name" type="category" width={100} />
-                      <Tooltip content={<CustomTooltip />} />
+                      <Tooltip content={(props) => <CustomTooltip {...props} />} />
                       <Bar dataKey="salary" fill="#0A66C2" />
                     </BarChart>
                   </ResponsiveContainer>
@@ -641,7 +642,7 @@ const SalariesPage = () => {
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="year" />
                       <YAxis tickFormatter={(value) => `$${value/1000}K`} />
-                      <Tooltip content={<CustomTooltip />} />
+                      <Tooltip content={(props) => <CustomTooltip {...props} />} />
                       <Legend />
                       <Line 
                         type="monotone" 
