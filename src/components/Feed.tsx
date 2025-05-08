@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { ThumbsUp, MessageSquare, Repost, Save, Image, Link2, Calendar, FileText, MoreHorizontal } from 'lucide-react';
+import { ThumbsUp, MessageSquare, RepeatIcon, Save, Image, Link2, Calendar, FileText, MoreHorizontal } from 'lucide-react';
 import {
   Tabs,
   TabsContent,
@@ -313,7 +312,7 @@ const Feed = () => {
                   className={`flex items-center ${repostedPosts[post.id] ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : 'text-gray-500 dark:text-gray-400'} hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue`}
                   onClick={() => handleRepost(post.id)}
                 >
-                  <Repost className="h-5 w-5 mr-1" />
+                  <RepeatIcon className="h-5 w-5 mr-1" />
                   <span className="text-xs">Repost</span>
                 </button>
                 <button 

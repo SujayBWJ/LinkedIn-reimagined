@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import NavBar from '../components/NavBar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -249,7 +248,9 @@ const SalariesPage = () => {
       return (
         <div className="bg-white dark:bg-gray-800 p-3 border border-gray-200 dark:border-gray-700 shadow-lg rounded">
           <p className="font-medium">{label}</p>
-          <p className="text-linkedin-blue dark:text-linkedin-lightBlue">{formatCurrency(payload[0].value)}</p>
+          <p className="text-linkedin-blue dark:text-linkedin-lightBlue">
+            ${payload[0].value.toLocaleString()}
+          </p>
         </div>
       );
     }
