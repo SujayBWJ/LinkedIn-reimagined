@@ -1,10 +1,25 @@
+
 import React, { useState } from 'react';
 import NavBar from '../components/NavBar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Bookmark, ChevronDown, Filter, MapPin, Search, Star, X, Building, ThumbsUp, ThumbsDown, Heart, MessageSquare } from 'lucide-react';
+import { 
+  Bookmark, 
+  ChevronDown, 
+  Filter, 
+  MapPin, 
+  Search, 
+  Star, 
+  X, 
+  Building, 
+  ThumbsUp, 
+  ThumbsDown, 
+  Heart, 
+  MessageSquare,
+  LightbulbIcon
+} from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -1053,7 +1068,7 @@ const Jobs = () => {
                     <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 rounded-lg p-4 mb-6">
                       <div className="flex items-start">
                         <div className="flex-shrink-0 bg-blue-100 dark:bg-blue-800 rounded-full p-2">
-                          <Lightbulb className="h-5 w-5 text-blue-600 dark:text-blue-300" />
+                          <LightbulbIcon className="h-5 w-5 text-blue-600 dark:text-blue-300" />
                         </div>
                         <div className="ml-3">
                           <h4 className="text-sm font-medium text-blue-800 dark:text-blue-300">Research thoroughly</h4>
