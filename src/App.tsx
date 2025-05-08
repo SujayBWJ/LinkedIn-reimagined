@@ -11,6 +11,8 @@ import Network from "./pages/Network";
 import Jobs from "./pages/Jobs";
 import Profile from "./pages/Profile";
 import Notifications from "./pages/Notifications";
+import CompanyPage from "./pages/CompanyPage";
+import SalariesPage from "./pages/SalariesPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,6 +31,14 @@ const App = () => (
             <Route path="/your-space" element={<YourSpace />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/notifications" element={<Notifications />} />
+            <Route path="/company/:id" element={<CompanyPage />} />
+            <Route path="/salaries" element={<SalariesPage />} />
+            <Route path="/news" element={<Index />} />
+            <Route path="/hashtag/:tag" element={<Index />} />
+            <Route path="/saved/:type" element={<YourSpace />} />
+            <Route path="/content/:type" element={<YourSpace />} />
+            <Route path="/my-items" element={<YourSpace />} />
+            <Route path="/settings" element={<Profile />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

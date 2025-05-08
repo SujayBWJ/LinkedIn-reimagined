@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Bell, Home, Search, Users, Briefcase, User, LogOut, Settings, Moon, Sun } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { Bell, Home, Search, Users, Briefcase, User, LogOut, Settings, Moon, Sun, DollarSign } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import {
   DropdownMenu,
@@ -10,10 +10,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const NavBar = () => {
   const { isDarkMode, toggleDarkMode } = useTheme();
   const [searchTerm, setSearchTerm] = useState('');
+  const location = useLocation();
+
+  const isActive = (path) => {
+    return location.pathname === path;
+  };
 
   return (
     <nav className="sticky top-0 z-40 w-full bg-white dark:bg-linkedin-darkGrey border-b border-gray-200 dark:border-gray-800 shadow-sm">
@@ -41,26 +47,48 @@ const NavBar = () => {
           </div>
           
           <div className="hidden md:flex items-center space-x-1">
-            <Link to="/" className="flex flex-col items-center px-3 py-2 text-sm font-medium text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue">
-              <Home className="h-6 w-6" />
+            <Link 
+              to="/" 
+              className={`flex flex-col items-center px-3 py-2 text-sm font-medium ${isActive('/') ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : 'text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue'}`}
+            >
+              <Home className={`h-6 w-6 ${isActive('/') ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : ''}`} />
               <span>Home</span>
             </Link>
-            <Link to="/network" className="flex flex-col items-center px-3 py-2 text-sm font-medium text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue">
-              <Users className="h-6 w-6" />
+            <Link 
+              to="/network" 
+              className={`flex flex-col items-center px-3 py-2 text-sm font-medium ${isActive('/network') ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : 'text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue'}`}
+            >
+              <Users className={`h-6 w-6 ${isActive('/network') ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : ''}`} />
               <span>Network</span>
             </Link>
-            <Link to="/jobs" className="flex flex-col items-center px-3 py-2 text-sm font-medium text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue">
-              <Briefcase className="h-6 w-6" />
+            <Link 
+              to="/jobs" 
+              className={`flex flex-col items-center px-3 py-2 text-sm font-medium ${isActive('/jobs') ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : 'text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue'}`}
+            >
+              <Briefcase className={`h-6 w-6 ${isActive('/jobs') ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : ''}`} />
               <span>Jobs</span>
             </Link>
-            <Link to="/your-space" className="flex flex-col items-center px-3 py-2 text-sm font-medium text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue">
-              <User className="h-6 w-6" />
+            <Link 
+              to="/your-space" 
+              className={`flex flex-col items-center px-3 py-2 text-sm font-medium ${isActive('/your-space') ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : 'text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue'}`}
+            >
+              <User className={`h-6 w-6 ${isActive('/your-space') ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : ''}`} />
               <span>Your Space</span>
+            </Link>
+            <Link 
+              to="/salaries" 
+              className={`flex flex-col items-center px-3 py-2 text-sm font-medium ${isActive('/salaries') ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : 'text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue'}`}
+            >
+              <DollarSign className={`h-6 w-6 ${isActive('/salaries') ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : ''}`} />
+              <span>Salaries</span>
             </Link>
           </div>
           
           <div className="flex items-center space-x-4">
-            <Link to="/notifications" className="relative p-1 rounded-full text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue">
+            <Link 
+              to="/notifications" 
+              className={`relative p-1 rounded-full ${isActive('/notifications') ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : 'text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue'}`}
+            >
               <span className="sr-only">Notifications</span>
               <Bell className="h-6 w-6" />
               <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500"></span>
@@ -69,25 +97,27 @@ const NavBar = () => {
             <DropdownMenu>
               <DropdownMenuTrigger className="focus:outline-none">
                 <div className="flex items-center">
-                  <div className="h-8 w-8 rounded-full bg-linkedin-blue text-white flex items-center justify-center">
-                    <span className="font-medium text-sm">JP</span>
-                  </div>
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80" alt="John Doe" />
+                    <AvatarFallback className="bg-linkedin-blue text-white">JD</AvatarFallback>
+                  </Avatar>
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
                 <div className="p-2">
                   <div className="flex items-center">
-                    <div className="h-10 w-10 rounded-full bg-linkedin-blue text-white flex items-center justify-center">
-                      <span className="font-medium text-sm">JP</span>
-                    </div>
+                    <Avatar className="h-10 w-10">
+                      <AvatarImage src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80" alt="John Doe" />
+                      <AvatarFallback className="bg-linkedin-blue text-white">JD</AvatarFallback>
+                    </Avatar>
                     <div className="ml-3">
                       <p className="text-sm font-medium">John Doe</p>
                       <p className="text-xs text-gray-500 dark:text-gray-400">Software Engineer</p>
                     </div>
                   </div>
-                  <button className="mt-2 w-full text-center text-sm text-linkedin-blue dark:text-linkedin-lightBlue font-medium">
+                  <Link to="/profile" className="mt-2 w-full text-center text-sm text-linkedin-blue dark:text-linkedin-lightBlue font-medium block hover:underline">
                     View Profile
-                  </button>
+                  </Link>
                 </div>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
@@ -124,21 +154,40 @@ const NavBar = () => {
       {/* Mobile Navigation */}
       <div className="sm:hidden border-t border-gray-200 dark:border-gray-800">
         <div className="flex justify-between px-2">
-          <Link to="/" className="flex flex-col items-center pt-2 pb-1 flex-1 text-xs font-medium text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue">
-            <Home className="h-6 w-6" />
+          <Link 
+            to="/" 
+            className={`flex flex-col items-center pt-2 pb-1 flex-1 text-xs font-medium ${isActive('/') ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : 'text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue'}`}
+          >
+            <Home className={`h-6 w-6 ${isActive('/') ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : ''}`} />
             <span>Home</span>
           </Link>
-          <Link to="/network" className="flex flex-col items-center pt-2 pb-1 flex-1 text-xs font-medium text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue">
-            <Users className="h-6 w-6" />
+          <Link 
+            to="/network" 
+            className={`flex flex-col items-center pt-2 pb-1 flex-1 text-xs font-medium ${isActive('/network') ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : 'text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue'}`}
+          >
+            <Users className={`h-6 w-6 ${isActive('/network') ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : ''}`} />
             <span>Network</span>
           </Link>
-          <Link to="/jobs" className="flex flex-col items-center pt-2 pb-1 flex-1 text-xs font-medium text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue">
-            <Briefcase className="h-6 w-6" />
+          <Link 
+            to="/jobs" 
+            className={`flex flex-col items-center pt-2 pb-1 flex-1 text-xs font-medium ${isActive('/jobs') ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : 'text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue'}`}
+          >
+            <Briefcase className={`h-6 w-6 ${isActive('/jobs') ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : ''}`} />
             <span>Jobs</span>
           </Link>
-          <Link to="/your-space" className="flex flex-col items-center pt-2 pb-1 flex-1 text-xs font-medium text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue">
-            <User className="h-6 w-6" />
+          <Link 
+            to="/your-space" 
+            className={`flex flex-col items-center pt-2 pb-1 flex-1 text-xs font-medium ${isActive('/your-space') ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : 'text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue'}`}
+          >
+            <User className={`h-6 w-6 ${isActive('/your-space') ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : ''}`} />
             <span>Your Space</span>
+          </Link>
+          <Link 
+            to="/salaries" 
+            className={`flex flex-col items-center pt-2 pb-1 flex-1 text-xs font-medium ${isActive('/salaries') ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : 'text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue'}`}
+          >
+            <DollarSign className={`h-6 w-6 ${isActive('/salaries') ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : ''}`} />
+            <span>Salaries</span>
           </Link>
         </div>
       </div>
