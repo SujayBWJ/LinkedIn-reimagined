@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import NavBar from '../components/NavBar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -23,7 +22,8 @@ import {
   Legend, 
   ResponsiveContainer,
   LineChart,
-  Line
+  Line,
+  TooltipProps
 } from 'recharts';
 
 const SalariesPage = () => {
@@ -244,13 +244,14 @@ const SalariesPage = () => {
     return formatCurrency(value);
   };
 
-  const CustomTooltip = ({ active, payload, label }) => {
+  // Update CustomTooltip to handle optional props
+  const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-white dark:bg-gray-800 p-3 border border-gray-200 dark:border-gray-700 shadow-lg rounded">
           <p className="font-medium">{label}</p>
           <p className="text-linkedin-blue dark:text-linkedin-lightBlue">
-            ${payload[0].value.toLocaleString()}
+            ${payload[0].value?.toLocaleString()}
           </p>
         </div>
       );
@@ -426,7 +427,7 @@ const SalariesPage = () => {
                         tickFormatter={(value) => `$${value/1000}K`} 
                         domain={[0, 'dataMax + 20000']}
                       />
-                      <Tooltip content={(props) => <CustomTooltip {...props} />} />
+                      <Tooltip content={CustomTooltip} />
                       <Bar dataKey="salary" fill="#0A66C2" />
                     </BarChart>
                   </ResponsiveContainer>
@@ -488,7 +489,7 @@ const SalariesPage = () => {
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="range" />
                       <YAxis />
-                      <Tooltip />
+                      <Tooltip content={CustomTooltip} />
                       <Bar dataKey="count" fill="#0A66C2" />
                     </BarChart>
                   </ResponsiveContainer>
@@ -528,7 +529,7 @@ const SalariesPage = () => {
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis type="number" tickFormatter={(value) => `$${value/1000}K`} />
                       <YAxis dataKey="name" type="category" width={80} />
-                      <Tooltip content={(props) => <CustomTooltip {...props} />} />
+                      <Tooltip content={CustomTooltip} />
                       <Bar dataKey="salary" fill="#0A66C2" />
                     </BarChart>
                   </ResponsiveContainer>
@@ -582,7 +583,7 @@ const SalariesPage = () => {
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis type="number" tickFormatter={(value) => `$${value/1000}K`} />
                       <YAxis dataKey="name" type="category" width={100} />
-                      <Tooltip content={(props) => <CustomTooltip {...props} />} />
+                      <Tooltip content={CustomTooltip} />
                       <Bar dataKey="salary" fill="#0A66C2" />
                     </BarChart>
                   </ResponsiveContainer>
@@ -642,7 +643,7 @@ const SalariesPage = () => {
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="year" />
                       <YAxis tickFormatter={(value) => `$${value/1000}K`} />
-                      <Tooltip content={(props) => <CustomTooltip {...props} />} />
+                      <Tooltip content={CustomTooltip} />
                       <Legend />
                       <Line 
                         type="monotone" 
