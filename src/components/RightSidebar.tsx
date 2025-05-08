@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Newspaper, X, MessageSquare, ChevronDown, ChevronUp, Search, Save } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -9,20 +8,22 @@ const RightSidebar = () => {
   const [showMessages, setShowMessages] = useState(true);
   const [activeChat, setActiveChat] = useState<string | null>(null);
   const [messageInput, setMessageInput] = useState('');
-  const [chatMessages, setChatMessages] = useState<{[key: string]: {text: string, sender: 'user' | 'contact', time: string}[]}>({
-    '1': [
-      { text: 'Hi there! How are you doing today?', sender: 'contact', time: '10:32 AM' },
-      { text: "I'm doing great! Working on a new project. How about you?", sender: 'user', time: '10:35 AM' },
-      { text: "That sounds exciting! I'd love to hear more about it.", sender: 'contact', time: '10:38 AM' },
-    ],
-    '2': [
-      { text: 'I sent you the files', sender: 'contact', time: '2:15 PM' },
-    ],
-    '3': [
-      { text: 'Thanks for your help!', sender: 'contact', time: '9:22 AM' },
-      { text: 'No problem! Happy to help anytime.', sender: 'user', time: '9:30 AM' },
-    ]
-  });
+  const [chatMessages, setChatMessages] = useState<{[key: string]: {text: string, sender: 'user' | 'contact', time: string}[]}>(
+    {
+      '1': [
+        { text: 'Hi there! How are you doing today?', sender: 'contact', time: '10:32 AM' },
+        { text: "I'm doing great! Working on a new project. How about you?", sender: 'user', time: '10:35 AM' },
+        { text: "That sounds exciting! I'd love to hear more about it.", sender: 'contact', time: '10:38 AM' },
+      ],
+      '2': [
+        { text: 'I sent you the files', sender: 'contact', time: '2:15 PM' },
+      ],
+      '3': [
+        { text: 'Thanks for your help!', sender: 'contact', time: '9:22 AM' },
+        { text: 'No problem! Happy to help anytime.', sender: 'user', time: '9:30 AM' },
+      ]
+    }
+  );
   
   // Mock messages data
   const messages = [
@@ -55,7 +56,7 @@ const RightSidebar = () => {
       name: 'Priya Sharma', 
       avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80', 
       status: 'offline', 
-      lastMessage: 'Let's discuss the project tomorrow', 
+      lastMessage: "Let's discuss the project tomorrow", 
       time: '5h' 
     },
     { 

@@ -21,7 +21,7 @@ const CompanyPage = () => {
     founded: 2005,
     hq: 'San Francisco, CA',
     website: 'https://techinnovations.example.com',
-    about: 'Tech Innovations Inc. is a leading technology company specializing in AI-powered solutions for businesses. Founded in 2005, we've grown to over 2,000 employees worldwide with offices in San Francisco, New York, London, and Singapore.',
+    about: "Tech Innovations Inc. is a leading technology company specializing in AI-powered solutions for businesses. Founded in 2005, we've grown to over 2,000 employees worldwide with offices in San Francisco, New York, London, and Singapore.",
     rating: 4.3,
     reviewCount: 856,
     ceoApproval: 92,
