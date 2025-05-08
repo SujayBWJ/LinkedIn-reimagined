@@ -1,5 +1,6 @@
+
 import React, { useState } from 'react';
-import { ThumbsUp, MessageSquare, RepeatIcon, Save, Image, Link2, Calendar, FileText, MoreHorizontal } from 'lucide-react';
+import { ThumbsUp, MessageSquare, RepeatIcon, Save, Image, Link2, Calendar, FileText, MoreHorizontal, Heart, Laugh, Smile, Angry } from 'lucide-react';
 import {
   Tabs,
   TabsContent,
@@ -7,6 +8,11 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 const Feed = () => {
   const [activeTab, setActiveTab] = useState("all");
@@ -14,9 +20,18 @@ const Feed = () => {
   const [comments, setComments] = useState({});
   const [showComments, setShowComments] = useState({});
   const [newComment, setNewComment] = useState({});
-  const [likedPosts, setLikedPosts] = useState({});
+  const [reactions, setReactions] = useState({});
   const [repostedPosts, setRepostedPosts] = useState({});
   const [savedPosts, setSavedPosts] = useState({});
+  
+  // Reaction types and their icons
+  const reactionTypes = [
+    { type: 'like', icon: ThumbsUp, label: 'Like', color: 'text-blue-500' },
+    { type: 'love', icon: Heart, label: 'Love', color: 'text-pink-500' },
+    { type: 'laugh', icon: Laugh, label: 'Haha', color: 'text-yellow-500' },
+    { type: 'celebrate', icon: Smile, label: 'Celebrate', color: 'text-green-500' },
+    { type: 'angry', icon: Angry, label: 'Angry', color: 'text-red-500' }
+  ];
   
   // Mock posts data with real photos
   const posts = [
@@ -137,11 +152,27 @@ const Feed = () => {
   
   const filteredPosts = activeTab === "all" ? posts : posts.filter(post => post.type === activeTab);
 
-  const handleLike = (postId) => {
-    setLikedPosts({
-      ...likedPosts,
-      [postId]: !likedPosts[postId]
+  const handleReact = (postId, reactionType) => {
+    setReactions({
+      ...reactions,
+      [postId]: reactionType
     });
+  };
+
+  const getReactionIcon = (postId) => {
+    const reaction = reactions[postId];
+    if (!reaction) return reactionTypes[0].icon;
+    
+    const reactionData = reactionTypes.find(r => r.type === reaction);
+    return reactionData.icon;
+  };
+  
+  const getReactionColor = (postId) => {
+    const reaction = reactions[postId];
+    if (!reaction) return '';
+    
+    const reactionData = reactionTypes.find(r => r.type === reaction);
+    return reactionData.color;
   };
 
   const handleRepost = (postId) => {
@@ -179,8 +210,8 @@ const Feed = () => {
     updatedComments.push({
       id: Date.now(),
       author: {
-        name: "John Doe",
-        avatar: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80"
+        name: "Zero",
+        avatar: "https://images.unsplash.com/photo-1501286353178-1ec881214838?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80"
       },
       content: newComment[postId],
       time: "Just now"
@@ -209,8 +240,8 @@ const Feed = () => {
       <div className="linkedin-card p-4">
         <div className="flex items-start">
           <Avatar className="h-10 w-10 mr-3">
-            <AvatarImage src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80" alt="JD" />
-            <AvatarFallback>JD</AvatarFallback>
+            <AvatarImage src="https://images.unsplash.com/photo-1501286353178-1ec881214838?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80" alt="Zero" />
+            <AvatarFallback>Z</AvatarFallback>
           </Avatar>
           <div className="ml-3 flex-1">
             <textarea
@@ -294,13 +325,34 @@ const Feed = () => {
             
             <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
               <div className="flex justify-between">
-                <button 
-                  className={`flex items-center ${likedPosts[post.id] ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : 'text-gray-500 dark:text-gray-400'} hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue`}
-                  onClick={() => handleLike(post.id)}
-                >
-                  <ThumbsUp className="h-5 w-5 mr-1" />
-                  <span className="text-xs">{likedPosts[post.id] ? post.likes + 1 : post.likes}</span>
-                </button>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <button 
+                      className={`flex items-center ${getReactionColor(post.id)} hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue`}
+                    >
+                      {React.createElement(getReactionIcon(post.id), { className: "h-5 w-5 mr-1" })}
+                      <span className="text-xs">{reactions[post.id] ? post.likes + 1 : post.likes}</span>
+                    </button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <div className="flex p-1 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+                      {reactionTypes.map((reaction) => (
+                        <button
+                          key={reaction.type}
+                          className={`p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-all transform hover:scale-110 ${
+                            reactions[post.id] === reaction.type ? reaction.color : ''
+                          }`}
+                          onClick={() => handleReact(post.id, reaction.type)}
+                        >
+                          {React.createElement(reaction.icon, { 
+                            className: "h-6 w-6", 
+                            fill: reactions[post.id] === reaction.type ? "currentColor" : "none" 
+                          })}
+                        </button>
+                      ))}
+                    </div>
+                  </PopoverContent>
+                </Popover>
                 <button 
                   className="flex items-center text-gray-500 dark:text-gray-400 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue"
                   onClick={() => toggleComments(post.id)}
@@ -349,8 +401,8 @@ const Feed = () => {
                   {/* Add Comment */}
                   <div className="flex space-x-2 mt-2">
                     <Avatar className="h-8 w-8 flex-shrink-0">
-                      <AvatarImage src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80" alt="JD" />
-                      <AvatarFallback>JD</AvatarFallback>
+                      <AvatarImage src="https://images.unsplash.com/photo-1501286353178-1ec881214838?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80" alt="Zero" />
+                      <AvatarFallback>Z</AvatarFallback>
                     </Avatar>
                     <div className="flex-1 flex space-x-2">
                       <input

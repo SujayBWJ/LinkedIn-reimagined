@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import NavBar from '../components/NavBar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -163,7 +162,7 @@ const Jobs = () => {
     }
   ];
   
-  // Mock company reviews data
+  // Mock company reviews data - EXPANDED
   const companyReviews = [
     {
       id: 1,
@@ -177,8 +176,9 @@ const Jobs = () => {
       founded: 2005,
       headquarters: "San Francisco, CA",
       website: "techsolutions.com",
-      overview: "Tech Solutions Inc is a leading technology company specializing in AI and machine learning solutions for enterprise customers.",
-      specialties: ["Artificial Intelligence", "Machine Learning", "Cloud Computing", "Enterprise Software"],
+      overview: "Tech Solutions Inc is a leading technology company specializing in AI and machine learning solutions for enterprise customers. They have been at the forefront of digital transformation, helping businesses leverage advanced technologies to drive innovation and operational excellence.",
+      mission: "To transform the way businesses operate through cutting-edge AI technology and exceptional service.",
+      specialties: ["Artificial Intelligence", "Machine Learning", "Cloud Computing", "Enterprise Software", "Data Analytics", "DevOps", "Digital Transformation", "SaaS Solutions"],
       featuredReviews: [
         {
           id: 101,
@@ -188,8 +188,8 @@ const Jobs = () => {
           employment: "Current Employee - 2 years",
           location: "San Francisco, CA",
           date: "April 12, 2025",
-          pros: "Excellent work-life balance, competitive compensation, latest technologies, strong engineering culture, and great opportunities for growth.",
-          cons: "Some teams face tight deadlines that can create pressure, and the pace of work can be demanding for new employees.",
+          pros: "Excellent work-life balance, competitive compensation, latest technologies, strong engineering culture, and great opportunities for growth. The company truly invests in professional development and provides resources for learning new skills. Leadership is transparent about company direction and challenges.",
+          cons: "Some teams face tight deadlines that can create pressure, and the pace of work can be demanding for new employees. The rapid growth means processes are sometimes still being figured out. Occasional communication gaps between departments.",
           helpfulCount: 87
         },
         {
@@ -200,9 +200,33 @@ const Jobs = () => {
           employment: "Former Employee - 3 years",
           location: "San Francisco, CA",
           date: "March 5, 2025",
-          pros: "Great benefits and compensation package. Some really talented engineers and designers to work with.",
-          cons: "Middle management is disorganized and there's often conflicting priorities between departments.",
+          pros: "Great benefits and compensation package. Some really talented engineers and designers to work with. The company offers excellent learning opportunities and has strong technical expertise. The office environment is comfortable and well-equipped.",
+          cons: "Middle management is disorganized and there's often conflicting priorities between departments. Decision-making can be slow due to excessive bureaucracy. Some managers lack people skills and focus too much on metrics rather than team well-being.",
           helpfulCount: 53
+        },
+        {
+          id: 103,
+          title: "Innovative company with great potential",
+          rating: 4,
+          position: "AI Research Scientist",
+          employment: "Current Employee - 1 year",
+          location: "Boston, MA",
+          date: "February 18, 2025",
+          pros: "Working on cutting-edge AI technology that has real-world impact. Strong research team with industry leaders. Good collaboration between research and engineering teams. Flexible work arrangements and competitive compensation package.",
+          cons: "Sometimes research priorities change too quickly based on market demands. Could improve communication between leadership and individual contributors about strategic changes. Some projects get abandoned without clear explanations.",
+          helpfulCount: 42
+        },
+        {
+          id: 104,
+          title: "Excellent for career growth but demanding",
+          rating: 4,
+          position: "Technical Project Manager",
+          employment: "Current Employee - 3 years",
+          location: "Remote",
+          date: "January 5, 2025",
+          pros: "Fantastic opportunities for career advancement. Working with latest technologies and methodologies. Strong emphasis on professional development with generous learning budget. Great remote work policy with proper tools and support.",
+          cons: "Work-life balance can be challenging during critical project phases. High expectations can lead to stress if you don't manage boundaries well. Some teams are understaffed which leads to occasional overwork.",
+          helpfulCount: 38
         }
       ],
       ratings: {
@@ -212,7 +236,40 @@ const Jobs = () => {
         jobSecurity: 4.6,
         management: 4.2,
         culture: 4.9
-      }
+      },
+      benefits: [
+        { name: "Health Insurance", rating: 4.8 },
+        { name: "Vacation & Time Off", rating: 4.7 },
+        { name: "Retirement Benefits", rating: 4.5 },
+        { name: "Parental Leave", rating: 4.9 },
+        { name: "Learning & Development", rating: 4.6 }
+      ],
+      interviews: [
+        {
+          position: "Software Engineer",
+          experience: "Positive",
+          difficulty: "Average",
+          offers: "Yes",
+          process: "Applied online, had an initial screening call with HR, followed by a technical assessment. Then two rounds of technical interviews with team members and a final interview with the engineering manager.",
+          questions: [
+            "Describe a challenging project you worked on and how you approached it.",
+            "How would you design a distributed system for high availability?",
+            "Coding exercise involving algorithm optimization."
+          ]
+        },
+        {
+          position: "Product Manager",
+          experience: "Neutral",
+          difficulty: "Difficult",
+          offers: "No",
+          process: "Employee referral, followed by screening call, case study presentation, and panel interviews with cross-functional team members.",
+          questions: [
+            "How would you prioritize features for our main product?",
+            "Describe how you would validate a new product idea.",
+            "Tell us about a time you had to make a difficult product decision."
+          ]
+        }
+      ]
     },
     {
       id: 2,
@@ -226,8 +283,9 @@ const Jobs = () => {
       founded: 1985,
       headquarters: "New York, NY",
       website: "globalfinancial.com",
-      overview: "Global Financial Group is one of the world's leading financial services corporations, providing banking, insurance, investments, and retirement services.",
-      specialties: ["Banking", "Asset Management", "Wealth Management", "Insurance"],
+      overview: "Global Financial Group is one of the world's leading financial services corporations, providing banking, insurance, investments, and retirement services. With a presence in over 30 countries, they serve millions of customers worldwide through innovative financial solutions and trusted advice.",
+      mission: "To empower our customers' financial well-being through trusted advice and innovative solutions.",
+      specialties: ["Banking", "Asset Management", "Wealth Management", "Insurance", "Investment Banking", "Financial Planning", "Retirement Services", "Mortgage Lending"],
       featuredReviews: [
         {
           id: 201,
@@ -237,8 +295,8 @@ const Jobs = () => {
           employment: "Current Employee - 4 years",
           location: "New York, NY",
           date: "March 28, 2025",
-          pros: "Stable work environment, good benefits, opportunities for internal movement, and respected name in the industry.",
-          cons: "Traditional corporate culture that can be slow to adopt change. Work can be repetitive in some departments.",
+          pros: "Stable work environment, good benefits, opportunities for internal movement, and respected name in the industry. The training programs are comprehensive and there's a clear career path if you want to advance. Good mentorship opportunities from experienced professionals.",
+          cons: "Traditional corporate culture that can be slow to adopt change. Work can be repetitive in some departments. The bureaucracy can be frustrating when trying to implement new ideas or processes. Technology stack is sometimes outdated compared to fintech companies.",
           helpfulCount: 124
         },
         {
@@ -249,9 +307,33 @@ const Jobs = () => {
           employment: "Former Employee - 1 year",
           location: "London, UK",
           date: "February 15, 2025",
-          pros: "Excellent compensation and bonus structure. Great learning opportunities and exposure to major deals.",
-          cons: "Extremely long hours and high pressure environment. Work-life balance is practically non-existent in some divisions.",
+          pros: "Excellent compensation and bonus structure. Great learning opportunities and exposure to major deals. Working with top-tier clients and on significant transactions provides valuable experience. The prestige of the firm opens doors for future career opportunities.",
+          cons: "Extremely long hours and high pressure environment. Work-life balance is practically non-existent in some divisions. Highly competitive culture that can sometimes feel cutthroat. Management can be impersonal and focused solely on results without regard to employee wellbeing.",
           helpfulCount: 98
+        },
+        {
+          id: 203,
+          title: "Good for learning fundamentals",
+          rating: 4,
+          position: "Risk Management Analyst",
+          employment: "Former Employee - 2 years",
+          location: "Chicago, IL",
+          date: "January 10, 2025",
+          pros: "Strong training program that builds fundamental financial knowledge. Exposure to various financial products and markets. Good networking opportunities within the industry. Compensation is competitive with good bonuses in profitable years.",
+          cons: "Conservative approach to innovation can be frustrating. Some departments are siloed with little cross-functional collaboration. Career advancement can be slow unless you're in a high-visibility role or have a strong sponsor.",
+          helpfulCount: 65
+        },
+        {
+          id: 204,
+          title: "Improving work-life balance",
+          rating: 4,
+          position: "Senior Relationship Manager",
+          employment: "Current Employee - 5 years",
+          location: "Singapore",
+          date: "April 2, 2025",
+          pros: "The company has made significant improvements in work-life balance policies in recent years. Good client exposure and relationship building opportunities. Excellent international career opportunities with potential for relocation or travel.",
+          cons: "Still lags behind tech companies in terms of flexible work arrangements. Legacy systems can make some processes unnecessarily complex. Regulatory requirements create additional administrative burden that can be tedious.",
+          helpfulCount: 82
         }
       ],
       ratings: {
@@ -261,7 +343,40 @@ const Jobs = () => {
         jobSecurity: 4.3,
         management: 3.7,
         culture: 3.8
-      }
+      },
+      benefits: [
+        { name: "Health Insurance", rating: 4.5 },
+        { name: "Vacation & Time Off", rating: 3.2 },
+        { name: "Retirement Benefits", rating: 4.8 },
+        { name: "Parental Leave", rating: 3.5 },
+        { name: "Learning & Development", rating: 4.2 }
+      ],
+      interviews: [
+        {
+          position: "Financial Analyst",
+          experience: "Positive",
+          difficulty: "Difficult",
+          offers: "Yes",
+          process: "Three rounds of interviews: HR screening, technical interview with team lead, final panel interview with senior management.",
+          questions: [
+            "Describe how you would value a company that's considering an IPO.",
+            "How would you analyze the risk of a potential investment?",
+            "Technical questions about financial modeling and Excel proficiency."
+          ]
+        },
+        {
+          position: "Wealth Management Advisor",
+          experience: "Positive",
+          difficulty: "Average",
+          offers: "Yes",
+          process: "Initial phone screening, personality assessment, in-person interview with regional manager, and final interview with team.",
+          questions: [
+            "How would you approach building a client portfolio?",
+            "Describe your experience with high-net-worth clients.",
+            "Role-playing exercise handling difficult client scenarios."
+          ]
+        }
+      ]
     },
     {
       id: 3,
@@ -275,8 +390,9 @@ const Jobs = () => {
       founded: 2010,
       headquarters: "Austin, TX",
       website: "creativedesign.com",
-      overview: "Creative Design Studio is an award-winning design firm that specializes in UI/UX design, branding, and digital experiences.",
-      specialties: ["UI/UX Design", "Brand Identity", "Digital Marketing", "Web Development"],
+      overview: "Creative Design Studio is an award-winning design firm that specializes in UI/UX design, branding, and digital experiences. The studio has worked with Fortune 500 companies as well as innovative startups to create compelling visual identities and user experiences that drive business results.",
+      mission: "To transform brands through innovative design that connects emotionally with audiences and drives meaningful engagement.",
+      specialties: ["UI/UX Design", "Brand Identity", "Digital Marketing", "Web Development", "Mobile App Design", "Motion Graphics", "Interactive Experiences", "Packaging Design"],
       featuredReviews: [
         {
           id: 301,
@@ -286,8 +402,8 @@ const Jobs = () => {
           employment: "Current Employee - 3 years",
           location: "Austin, TX",
           date: "May 1, 2025",
-          pros: "Creative freedom, collaborative environment, cutting-edge projects, and supportive management that values design.",
-          cons: "Client deadlines can sometimes create crunch periods. Some processes could be more streamlined.",
+          pros: "Creative freedom, collaborative environment, cutting-edge projects, and supportive management that values design. The studio encourages experimentation and innovation, with time dedicated to creative exploration. Regular design workshops and knowledge sharing sessions keep skills sharp. Leadership recognizes and rewards good work consistently.",
+          cons: "Client deadlines can sometimes create crunch periods. Some processes could be more streamlined. Project management tools change frequently as the company tries to optimize workflows, which can create temporary confusion. Sometimes communication between departments could be improved.",
           helpfulCount: 67
         },
         {
@@ -298,9 +414,33 @@ const Jobs = () => {
           employment: "Current Employee - 1 year",
           location: "Remote",
           date: "April 19, 2025",
-          pros: "Excellent mentorship program, diverse projects, flexible remote work policy, and good starting salary.",
-          cons: "Limited clear path for advancement beyond senior designer roles. Company is growing fast which creates some growing pains.",
+          pros: "Excellent mentorship program, diverse projects, flexible remote work policy, and good starting salary. The onboarding process is thorough and supportive. Regular feedback helps improve skills quickly. Access to latest design tools and resources. Fun team culture with virtual social events.",
+          cons: "Limited clear path for advancement beyond senior designer roles. Company is growing fast which creates some growing pains. Sometimes workload distribution isn't even across the team. Decision making can be slow on larger projects with multiple stakeholders.",
           helpfulCount: 42
+        },
+        {
+          id: 303,
+          title: "Inspiring work culture but demanding pace",
+          rating: 4,
+          position: "UX Researcher",
+          employment: "Current Employee - 2 years",
+          location: "Austin, TX",
+          date: "March 15, 2025",
+          pros: "Working with innovative clients on meaningful projects. Research is highly valued and integrated into the design process. Competitive compensation and good benefits. The team is diverse and brings different perspectives to projects. Leadership is accessible and open to feedback.",
+          cons: "Fast-paced environment can sometimes prioritize speed over depth of research. Client expectations can be challenging to manage. Some projects have tight budgets that limit research scope. Work can spill into evenings during busy periods.",
+          helpfulCount: 53
+        },
+        {
+          id: 304,
+          title: "Amazing portfolio builder",
+          rating: 5,
+          position: "Graphic Designer",
+          employment: "Former Employee - 2 years",
+          location: "New York, NY",
+          date: "February 8, 2025",
+          pros: "Opportunity to work on high-profile brands and campaigns that look impressive in your portfolio. Strong creative direction that pushes your skills to new levels. Collaborative team environment where ideas are welcomed from everyone regardless of seniority. Regular creative reviews provide valuable feedback.",
+          cons: "Workload can be intense during peak periods. Some clients have very tight turnaround times. The emphasis on visual excellence means multiple revisions are common, which can be exhausting. Benefits package could be more competitive for the industry.",
+          helpfulCount: 38
         }
       ],
       ratings: {
@@ -310,7 +450,40 @@ const Jobs = () => {
         jobSecurity: 4.2,
         management: 4.6,
         culture: 4.8
-      }
+      },
+      benefits: [
+        { name: "Health Insurance", rating: 4.2 },
+        { name: "Vacation & Time Off", rating: 4.5 },
+        { name: "Retirement Benefits", rating: 3.8 },
+        { name: "Parental Leave", rating: 4.4 },
+        { name: "Learning & Development", rating: 4.9 }
+      ],
+      interviews: [
+        {
+          position: "UI/UX Designer",
+          experience: "Positive",
+          difficulty: "Average",
+          offers: "Yes",
+          process: "Portfolio review, design challenge, two rounds of interviews with the design team and creative director.",
+          questions: [
+            "Walk us through your design process for a recent project.",
+            "How do you incorporate user feedback into your designs?",
+            "Design exercise: redesign a problematic user interface."
+          ]
+        },
+        {
+          position: "Art Director",
+          experience: "Positive",
+          difficulty: "Difficult",
+          offers: "Yes",
+          process: "Portfolio presentation, case study analysis, team interview, and final interview with creative leadership.",
+          questions: [
+            "How do you balance creative vision with client requirements?",
+            "Describe how you would lead a team through a rebranding project.",
+            "How do you stay current with design trends while maintaining a unique perspective?"
+          ]
+        }
+      ]
     },
     {
       id: 4,
@@ -324,8 +497,9 @@ const Jobs = () => {
       founded: 2012,
       headquarters: "Boston, MA",
       website: "analyticsinsights.com",
-      overview: "Analytics Insights Group helps organizations transform their data into actionable business intelligence through advanced analytics and AI solutions.",
-      specialties: ["Data Science", "Business Intelligence", "Machine Learning", "Statistical Analysis"],
+      overview: "Analytics Insights Group helps organizations transform their data into actionable business intelligence through advanced analytics and AI solutions. The company specializes in data strategy, predictive analytics, and building custom data platforms that drive business growth and operational efficiency.",
+      mission: "To empower organizations to make confident, data-driven decisions through accessible analytics and machine learning solutions.",
+      specialties: ["Data Science", "Business Intelligence", "Machine Learning", "Statistical Analysis", "Predictive Modeling", "Data Engineering", "Visualization", "AI Strategy"],
       featuredReviews: [
         {
           id: 401,
@@ -335,8 +509,8 @@ const Jobs = () => {
           employment: "Current Employee - 2 years",
           location: "Boston, MA",
           date: "March 3, 2025",
-          pros: "Working with cutting-edge technologies and methodologies. Challenging problems to solve and good technical leadership.",
-          cons: "Communication between technical and business teams could be improved. Sometimes project requirements change frequently.",
+          pros: "Working with cutting-edge technologies and methodologies. Challenging problems to solve and good technical leadership. The company invests in new tools and technologies, allowing teams to experiment with innovative approaches. Regular knowledge sharing sessions keep everyone updated on advances in the field. Collaborative environment with accessible leadership.",
+          cons: "Communication between technical and business teams could be improved. Sometimes project requirements change frequently. Client expectations about AI capabilities can be unrealistic and difficult to manage. Some projects have aggressive timelines that can create pressure.",
           helpfulCount: 59
         },
         {
@@ -347,9 +521,33 @@ const Jobs = () => {
           employment: "Former Employee - 2 years",
           location: "Chicago, IL",
           date: "February 25, 2025",
-          pros: "Excellent training opportunities and exposure to diverse industries. Strong technical team with lots to learn from.",
-          cons: "Client-facing roles can be demanding with tough deadlines and high expectations. Some teams are understaffed.",
+          pros: "Excellent training opportunities and exposure to diverse industries. Strong technical team with lots to learn from. Projects are challenging and provide good career development. The company provides access to courses and certifications. Good compensation package with performance bonuses.",
+          cons: "Client-facing roles can be demanding with tough deadlines and high expectations. Some teams are understaffed. Work-life balance can suffer during critical project phases. Internal processes could be more streamlined. Limited options for remote work compared to competitors.",
           helpfulCount: 38
+        },
+        {
+          id: 403,
+          title: "Innovative company that values expertise",
+          rating: 5,
+          position: "Machine Learning Engineer",
+          employment: "Current Employee - 1 year",
+          location: "Remote",
+          date: "April 10, 2025",
+          pros: "Truly values technical expertise and innovation. Remote-friendly culture with effective collaboration tools. Interesting problems to solve across multiple industries. Clear career progression paths for technical roles. Leadership communicates company direction and strategy effectively.",
+          cons: "Project staffing can sometimes lead to overspecialization. Some legacy clients use outdated technology stacks that can be frustrating to work with. Benefits package could be more competitive. Company is growing quickly which creates occasional organizational challenges.",
+          helpfulCount: 45
+        },
+        {
+          id: 404,
+          title: "Good stepping stone for career advancement",
+          rating: 4,
+          position: "Data Engineer",
+          employment: "Former Employee - 3 years",
+          location: "Boston, MA",
+          date: "January 5, 2025",
+          pros: "Exposure to various industries and data architectures. Strong emphasis on best practices and data quality. Good technical mentorship from senior team members. Projects provide valuable experience that translates well to career advancement. Company name is well-respected in the industry.",
+          cons: "Project timelines can be aggressive, leading to occasional crunch periods. Compensation is good but not top-of-market. Some teams experience high turnover. Training for new technologies could be more structured and comprehensive. Internal tools sometimes lag behind industry standards.",
+          helpfulCount: 32
         }
       ],
       ratings: {
@@ -359,7 +557,111 @@ const Jobs = () => {
         jobSecurity: 4.0,
         management: 4.2,
         culture: 4.4
-      }
+      },
+      benefits: [
+        { name: "Health Insurance", rating: 4.5 },
+        { name: "Vacation & Time Off", rating: 3.9 },
+        { name: "Retirement Benefits", rating: 4.2 },
+        { name: "Parental Leave", rating: 3.8 },
+        { name: "Learning & Development", rating: 4.7 }
+      ],
+      interviews: [
+        {
+          position: "Data Scientist",
+          experience: "Neutral",
+          difficulty: "Difficult",
+          offers: "Yes",
+          process: "Technical assessment, coding challenge, two rounds of technical interviews, and final interview with leadership.",
+          questions: [
+            "How would you build a recommendation engine for an e-commerce website?",
+            "Coding exercise involving data cleaning and machine learning implementation.",
+            "Describe a challenging data analysis project you've worked on and how you solved it."
+          ]
+        },
+        {
+          position: "Analytics Consultant",
+          experience: "Positive",
+          difficulty: "Average",
+          offers: "Yes",
+          process: "Case study, presentation on past analytics work, panel interview with consulting team.",
+          questions: [
+            "How would you explain complex analytics concepts to non-technical stakeholders?",
+            "Describe how you would approach a data strategy project for a client.",
+            "How do you validate results and ensure data quality?"
+          ]
+        }
+      ]
+    },
+    {
+      id: 5,
+      name: "GreenTech Innovations",
+      logo: "GT",
+      rating: 4.6,
+      reviews: 526,
+      industry: "Environmental Technology",
+      size: "501-1,000 employees",
+      type: "Private Company",
+      founded: 2014,
+      headquarters: "Portland, OR",
+      website: "greentechinnovations.com",
+      overview: "GreenTech Innovations develops sustainable technology solutions for businesses and consumers. Their products range from energy-efficient smart home systems to industrial-scale renewable energy solutions. The company is committed to environmental stewardship while delivering cutting-edge technology.",
+      mission: "To accelerate the transition to sustainable living through innovative technology that reduces environmental impact.",
+      specialties: ["Renewable Energy", "Smart Home Technology", "Energy Efficiency", "Environmental Monitoring", "Sustainable Design", "IoT Solutions", "Carbon Footprint Reduction"],
+      featuredReviews: [
+        {
+          id: 501,
+          title: "Mission-driven company with real impact",
+          rating: 5,
+          position: "Product Manager",
+          employment: "Current Employee - 2 years",
+          location: "Portland, OR",
+          date: "April 25, 2025",
+          pros: "Working on products that have a positive environmental impact. Strong company mission that aligns with personal values. Collaborative culture that encourages innovation. Good work-life balance with flexible schedules. Leadership is transparent about company direction and challenges.",
+          cons: "Growth has led to some organizational challenges. Some projects face funding constraints due to venture capital expectations. Decision-making can sometimes be slow when multiple stakeholders are involved.",
+          helpfulCount: 73
+        },
+        {
+          id: 502,
+          title: "Great culture but growing pains",
+          rating: 4,
+          position: "Software Engineer",
+          employment: "Current Employee - 1 year",
+          location: "Remote",
+          date: "March 12, 2025",
+          pros: "Meaningful work with environmental impact. Strong engineering practices and modern tech stack. Supportive team environment with good collaboration. Remote-friendly policies with effective tools for distributed work.",
+          cons: "Rapid growth has created some process inefficiencies. Documentation sometimes lags behind development. Compensation is good but not competitive with pure tech companies. Some teams are understaffed which creates occasional workload challenges.",
+          helpfulCount: 48
+        }
+      ],
+      ratings: {
+        overall: 4.6,
+        workLifeBalance: 4.4,
+        compensation: 4.2,
+        jobSecurity: 4.3,
+        management: 4.5,
+        culture: 4.8
+      },
+      benefits: [
+        { name: "Health Insurance", rating: 4.5 },
+        { name: "Vacation & Time Off", rating: 4.7 },
+        { name: "Retirement Benefits", rating: 4.0 },
+        { name: "Parental Leave", rating: 4.6 },
+        { name: "Learning & Development", rating: 4.3 }
+      ],
+      interviews: [
+        {
+          position: "Environmental Engineer",
+          experience: "Positive",
+          difficulty: "Average",
+          offers: "Yes",
+          process: "Technical assessment, two rounds of interviews with team and leadership.",
+          questions: [
+            "How would you approach optimizing energy efficiency in a commercial building?",
+            "Describe a project where you implemented sustainable solutions.",
+            "Technical questions about specific environmental regulations and standards."
+          ]
+        }
+      ]
     }
   ];
 
@@ -373,6 +675,10 @@ const Jobs = () => {
     { name: 'Manufacturing', salary: 72000 },
     { name: 'Consulting', salary: 98000 },
     { name: 'Media', salary: 85000 },
+    { name: 'Environmental', salary: 88000 },
+    { name: 'Telecommunications', salary: 97000 },
+    { name: 'Pharmaceuticals', salary: 118000 },
+    { name: 'Automotive', salary: 79000 },
   ];
 
   const roleData = [
@@ -384,723 +690,7 @@ const Jobs = () => {
     { name: 'Sales Director', salary: 145000 },
     { name: 'HR Specialist', salary: 82000 },
     { name: 'Financial Analyst', salary: 105000 },
-  ];
-
-  const experienceData = [
-    { name: 'Entry Level (0-2 yrs)', salary: 70000 },
-    { name: 'Mid Level (3-5 yrs)', salary: 95000 },
-    { name: 'Senior (6-10 yrs)', salary: 130000 },
-    { name: 'Manager (7+ yrs)', salary: 150000 },
-    { name: 'Director (10+ yrs)', salary: 190000 },
-    { name: 'Executive (15+ yrs)', salary: 250000 },
-  ];
-
-  const locationData = [
-    { name: 'San Francisco', salary: 142000 },
-    { name: 'New York', salary: 135000 },
-    { name: 'Seattle', salary: 128000 },
-    { name: 'Boston', salary: 125000 },
-    { name: 'Austin', salary: 115000 },
-    { name: 'Chicago', salary: 110000 },
-    { name: 'Denver', salary: 105000 },
-    { name: 'Atlanta', salary: 95000 },
-  ];
-
-  const salaryRangeData = [
-    { range: '$0-50K', count: 12 },
-    { range: '$50K-75K', count: 25 },
-    { range: '$75K-100K', count: 38 },
-    { range: '$100K-125K', count: 42 },
-    { range: '$125K-150K', count: 35 },
-    { range: '$150K-200K', count: 24 },
-    { range: '$200K+', count: 15 },
-  ];
-
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      maximumFractionDigits: 0
-    }).format(value);
-  };
-  
-  // Get currently selected job
-  const currentJob = jobListings.find(job => job.id === selectedJob);
-  const currentCompany = companyReviews.find(company => company.id === selectedCompany);
-  
-  return (
-    <div className="min-h-screen bg-linkedin-lightGrey dark:bg-linkedin-darkGrey">
-      <NavBar />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">        
-        <Tabs defaultValue="discover" value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="w-full bg-white dark:bg-linkedin-darkGrey border border-gray-200 dark:border-gray-800 mb-6">
-            <TabsTrigger value="discover" className="flex-1">Discover</TabsTrigger>
-            <TabsTrigger value="applications" className="flex-1">Applications</TabsTrigger>
-            <TabsTrigger value="reviews" className="flex-1">Company Reviews</TabsTrigger>
-            <TabsTrigger value="salaries" className="flex-1">Salaries</TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="discover" className="mt-0">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* Job Search Filters */}
-              <div className="col-span-1">
-                <Card className="linkedin-card sticky top-20">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-lg flex items-center justify-between">
-                      <span>Search Filters</span>
-                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                        <X className="h-4 w-4" />
-                      </Button>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Role</label>
-                      <Select>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Any role" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectItem value="engineering">Engineering</SelectItem>
-                            <SelectItem value="design">Design</SelectItem>
-                            <SelectItem value="product">Product Management</SelectItem>
-                            <SelectItem value="marketing">Marketing</SelectItem>
-                            <SelectItem value="sales">Sales</SelectItem>
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Company Location</label>
-                      <Select>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Anywhere" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectItem value="us">United States</SelectItem>
-                            <SelectItem value="remote">Remote Only</SelectItem>
-                            <SelectItem value="europe">Europe</SelectItem>
-                            <SelectItem value="asia">Asia</SelectItem>
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Salary Range</label>
-                      <Select>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Any salary" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectItem value="0-50k">$0 - $50,000</SelectItem>
-                            <SelectItem value="50k-100k">$50,000 - $100,000</SelectItem>
-                            <SelectItem value="100k-150k">$100,000 - $150,000</SelectItem>
-                            <SelectItem value="150k+">$150,000+</SelectItem>
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Industry</label>
-                      <Select>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="All industries" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectItem value="tech">Technology</SelectItem>
-                            <SelectItem value="finance">Finance</SelectItem>
-                            <SelectItem value="healthcare">Healthcare</SelectItem>
-                            <SelectItem value="education">Education</SelectItem>
-                            <SelectItem value="retail">Retail</SelectItem>
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Experience Level</label>
-                      <Select>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Any experience" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectItem value="internship">Internship</SelectItem>
-                            <SelectItem value="entry">Entry Level</SelectItem>
-                            <SelectItem value="associate">Associate</SelectItem>
-                            <SelectItem value="mid-senior">Mid-Senior Level</SelectItem>
-                            <SelectItem value="director">Director</SelectItem>
-                            <SelectItem value="executive">Executive</SelectItem>
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Job Type</label>
-                      <Select>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="All job types" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectItem value="full-time">Full-time</SelectItem>
-                            <SelectItem value="part-time">Part-time</SelectItem>
-                            <SelectItem value="contract">Contract</SelectItem>
-                            <SelectItem value="temporary">Temporary</SelectItem>
-                            <SelectItem value="internship">Internship</SelectItem>
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    
-                    <div className="pt-2">
-                      <Button className="w-full bg-linkedin-blue hover:bg-linkedin-darkBlue">
-                        Apply Filters
-                      </Button>
-                      <Button variant="link" className="w-full mt-2 text-linkedin-blue dark:text-linkedin-lightBlue">
-                        Reset All
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-              
-              {/* Job Listings */}
-              <div className="col-span-1">
-                <Card className="linkedin-card">
-                  <CardHeader className="pb-2">
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <Search className="h-4 w-4 text-gray-400" />
-                      </div>
-                      <input
-                        type="text"
-                        placeholder="Search job titles or keywords"
-                        className="pl-10 pr-3 py-2 w-full border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-800 text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-linkedin-blue focus:border-transparent"
-                      />
-                    </div>
-                  </CardHeader>
-                  <CardContent className="p-0">
-                    <div className="space-y-1">
-                      {jobListings.map((job) => (
-                        <button
-                          key={job.id}
-                          onClick={() => setSelectedJob(job.id)}
-                          className={`w-full text-left p-4 hover:bg-gray-100 dark:hover:bg-gray-800/70 border-l-4 ${selectedJob === job.id ? 'border-linkedin-blue bg-blue-50 dark:bg-blue-900/20' : 'border-transparent'}`}
-                        >
-                          <h3 className="font-medium text-lg">{job.title}</h3>
-                          <p className="text-gray-700 dark:text-gray-300">{job.company}</p>
-                          <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mt-1">
-                            <MapPin className="h-4 w-4 mr-1" />
-                            <span>{job.location}</span>
-                          </div>
-                          <div className="flex justify-between items-center mt-2 text-sm">
-                            <span className="text-gray-500 dark:text-gray-400">{job.posted}</span>
-                            <span className="text-gray-500 dark:text-gray-400">{job.applicants} applicants</span>
-                          </div>
-                        </button>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-              
-              {/* Job Details */}
-              <div className="col-span-1">
-                {currentJob && (
-                  <Card className="linkedin-card sticky top-20">
-                    <CardContent className="p-6">
-                      <div className="flex justify-between items-start mb-4">
-                        <h2 className="text-xl font-bold">{currentJob.title}</h2>
-                        <div className="flex space-x-2">
-                          <Button variant="outline" size="sm">
-                            <Bookmark className="h-4 w-4 mr-2" />
-                            Save
-                          </Button>
-                          <Button size="sm" className="bg-linkedin-blue hover:bg-linkedin-darkBlue">
-                            Apply
-                          </Button>
-                        </div>
-                      </div>
-                      
-                      <div className="mb-4">
-                        <h3 className="font-medium">{currentJob.company}</h3>
-                        <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mt-1">
-                          <MapPin className="h-4 w-4 mr-1" />
-                          <span>{currentJob.location}</span>
-                        </div>
-                        <div className="mt-1 text-sm text-gray-500 dark:text-gray-500">
-                          Posted {currentJob.posted} • {currentJob.applicants} applicants
-                        </div>
-                      </div>
-                      
-                      <div className="mb-4 p-3 bg-green-50 dark:bg-green-900/20 rounded-md border border-green-100 dark:border-green-800">
-                        <div className="text-sm font-medium text-gray-700 dark:text-gray-300">Salary Range</div>
-                        <div className="text-lg font-semibold text-green-700 dark:text-green-500">{currentJob.salary}</div>
-                      </div>
-                      
-                      <Separator className="my-4" />
-                      
-                      <div className="mb-4">
-                        <h3 className="font-semibold mb-2">Job Description</h3>
-                        <p className="text-sm text-gray-700 dark:text-gray-300">{currentJob.description}</p>
-                      </div>
-                      
-                      <div className="mb-4">
-                        <h3 className="font-semibold mb-2">Requirements</h3>
-                        <ul className="list-disc pl-5 space-y-1">
-                          {currentJob.requirements.map((req, index) => (
-                            <li key={index} className="text-sm text-gray-700 dark:text-gray-300">{req}</li>
-                          ))}
-                        </ul>
-                      </div>
-                      
-                      <div className="mb-4">
-                        <h3 className="font-semibold mb-2">Benefits</h3>
-                        <ul className="list-disc pl-5 space-y-1">
-                          {currentJob.benefits.map((benefit, index) => (
-                            <li key={index} className="text-sm text-gray-700 dark:text-gray-300">{benefit}</li>
-                          ))}
-                        </ul>
-                      </div>
-                      
-                      <div className="mt-6 flex flex-col sm:flex-row sm:justify-between space-y-3 sm:space-y-0 sm:space-x-3">
-                        <Button className="bg-linkedin-blue hover:bg-linkedin-darkBlue">
-                          Apply Now
-                        </Button>
-                        <Button variant="outline">
-                          <Star className="h-4 w-4 mr-2" />
-                          Follow Company
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                )}
-              </div>
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="applications" className="mt-0">
-            <Card className="linkedin-card">
-              <CardHeader>
-                <CardTitle>Application Tracker</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <Tabs defaultValue="all">
-                  <TabsList>
-                    <TabsTrigger value="all">All</TabsTrigger>
-                    <TabsTrigger value="saved">Saved</TabsTrigger>
-                    <TabsTrigger value="applied">Applied</TabsTrigger>
-                    <TabsTrigger value="interviewing">Interviewing</TabsTrigger>
-                  </TabsList>
-                  
-                  <div className="mt-6 space-y-4">
-                    {applications.map(app => (
-                      <div key={app.id} className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 border border-gray-200 dark:border-gray-800 rounded-lg">
-                        <div>
-                          <h3 className="font-medium">{app.title}</h3>
-                          <p className="text-sm text-gray-600 dark:text-gray-400">{app.company}</p>
-                          <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">Applied on {app.date}</p>
-                        </div>
-                        <div className="mt-3 sm:mt-0">
-                          <Badge className={`
-                            ${app.status === 'Applied' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300' : ''}
-                            ${app.status === 'Interview' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300' : ''}
-                            ${app.status === 'Saved' ? 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300' : ''}
-                          `}>
-                            {app.status}
-                          </Badge>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </Tabs>
-              </CardContent>
-            </Card>
-          </TabsContent>
-          
-          <TabsContent value="reviews" className="mt-0">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* Companies List */}
-              <div className="col-span-1">
-                <Card className="linkedin-card">
-                  <CardHeader className="pb-2">
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <Search className="h-4 w-4 text-gray-400" />
-                      </div>
-                      <input
-                        type="text"
-                        placeholder="Search companies"
-                        className="pl-10 pr-3 py-2 w-full border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-800 text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-linkedin-blue focus:border-transparent"
-                      />
-                    </div>
-                  </CardHeader>
-                  <CardContent className="p-0">
-                    <div className="space-y-1">
-                      {companyReviews.map((company) => (
-                        <button
-                          key={company.id}
-                          onClick={() => setSelectedCompany(company.id)}
-                          className={`w-full text-left p-4 hover:bg-gray-100 dark:hover:bg-gray-800/70 border-l-4 ${selectedCompany === company.id ? 'border-linkedin-blue bg-blue-50 dark:bg-blue-900/20' : 'border-transparent'}`}
-                        >
-                          <div className="flex items-center">
-                            <Avatar className="h-10 w-10 mr-3 bg-linkedin-blue text-white">
-                              <AvatarFallback>{company.logo}</AvatarFallback>
-                            </Avatar>
-                            <div>
-                              <h3 className="font-medium">{company.name}</h3>
-                              <div className="flex items-center text-sm">
-                                <div className="flex items-center text-yellow-500 mr-1">
-                                  <Star className="h-4 w-4 fill-current" />
-                                </div>
-                                <span className="font-medium mr-1">{company.rating}</span>
-                                <span className="text-gray-500 dark:text-gray-400">({company.reviews} reviews)</span>
-                              </div>
-                            </div>
-                          </div>
-                        </button>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-              
-              {/* Company Details */}
-              {currentCompany && (
-                <div className="col-span-2">
-                  <Card className="linkedin-card mb-4">
-                    <CardHeader className="pb-2">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center">
-                          <Avatar className="h-16 w-16 mr-4 bg-linkedin-blue text-white">
-                            <AvatarFallback>{currentCompany.logo}</AvatarFallback>
-                          </Avatar>
-                          <div>
-                            <CardTitle>{currentCompany.name}</CardTitle>
-                            <div className="flex items-center mt-1">
-                              <div className="flex items-center text-yellow-500 mr-1">
-                                <Star className="h-4 w-4 fill-current" />
-                              </div>
-                              <span className="font-medium mr-1">{currentCompany.rating}</span>
-                              <span className="text-gray-500 dark:text-gray-400">({currentCompany.reviews} reviews)</span>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="flex space-x-2">
-                          <Button variant="outline" size="sm">
-                            <Star className="h-4 w-4 mr-2" />
-                            Follow
-                          </Button>
-                          <Button size="sm" className="bg-linkedin-blue hover:bg-linkedin-darkBlue">
-                            See Jobs
-                          </Button>
-                        </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <div>
-                          <h3 className="font-medium mb-2">Company Details</h3>
-                          <div className="space-y-2 text-sm">
-                            <div className="flex">
-                              <span className="text-gray-500 dark:text-gray-400 w-28">Industry:</span>
-                              <span>{currentCompany.industry}</span>
-                            </div>
-                            <div className="flex">
-                              <span className="text-gray-500 dark:text-gray-400 w-28">Size:</span>
-                              <span>{currentCompany.size}</span>
-                            </div>
-                            <div className="flex">
-                              <span className="text-gray-500 dark:text-gray-400 w-28">Type:</span>
-                              <span>{currentCompany.type}</span>
-                            </div>
-                            <div className="flex">
-                              <span className="text-gray-500 dark:text-gray-400 w-28">Founded:</span>
-                              <span>{currentCompany.founded}</span>
-                            </div>
-                            <div className="flex">
-                              <span className="text-gray-500 dark:text-gray-400 w-28">Headquarters:</span>
-                              <span>{currentCompany.headquarters}</span>
-                            </div>
-                            <div className="flex">
-                              <span className="text-gray-500 dark:text-gray-400 w-28">Website:</span>
-                              <a href={`https://${currentCompany.website}`} target="_blank" rel="noopener noreferrer" className="text-linkedin-blue dark:text-linkedin-lightBlue hover:underline">{currentCompany.website}</a>
-                            </div>
-                          </div>
-                        </div>
-                        <div>
-                          <h3 className="font-medium mb-2">Rating Breakdown</h3>
-                          <div className="space-y-2">
-                            <div className="flex items-center">
-                              <span className="text-sm text-gray-600 dark:text-gray-400 w-40">Overall</span>
-                              <div className="flex items-center flex-1">
-                                <Progress value={currentCompany.ratings.overall * 20} className="h-2 flex-1 mr-2" />
-                                <span className="text-sm font-medium">{currentCompany.ratings.overall}</span>
-                              </div>
-                            </div>
-                            <div className="flex items-center">
-                              <span className="text-sm text-gray-600 dark:text-gray-400 w-40">Work/Life Balance</span>
-                              <div className="flex items-center flex-1">
-                                <Progress value={currentCompany.ratings.workLifeBalance * 20} className="h-2 flex-1 mr-2" />
-                                <span className="text-sm font-medium">{currentCompany.ratings.workLifeBalance}</span>
-                              </div>
-                            </div>
-                            <div className="flex items-center">
-                              <span className="text-sm text-gray-600 dark:text-gray-400 w-40">Compensation</span>
-                              <div className="flex items-center flex-1">
-                                <Progress value={currentCompany.ratings.compensation * 20} className="h-2 flex-1 mr-2" />
-                                <span className="text-sm font-medium">{currentCompany.ratings.compensation}</span>
-                              </div>
-                            </div>
-                            <div className="flex items-center">
-                              <span className="text-sm text-gray-600 dark:text-gray-400 w-40">Job Security</span>
-                              <div className="flex items-center flex-1">
-                                <Progress value={currentCompany.ratings.jobSecurity * 20} className="h-2 flex-1 mr-2" />
-                                <span className="text-sm font-medium">{currentCompany.ratings.jobSecurity}</span>
-                              </div>
-                            </div>
-                            <div className="flex items-center">
-                              <span className="text-sm text-gray-600 dark:text-gray-400 w-40">Management</span>
-                              <div className="flex items-center flex-1">
-                                <Progress value={currentCompany.ratings.management * 20} className="h-2 flex-1 mr-2" />
-                                <span className="text-sm font-medium">{currentCompany.ratings.management}</span>
-                              </div>
-                            </div>
-                            <div className="flex items-center">
-                              <span className="text-sm text-gray-600 dark:text-gray-400 w-40">Culture</span>
-                              <div className="flex items-center flex-1">
-                                <Progress value={currentCompany.ratings.culture * 20} className="h-2 flex-1 mr-2" />
-                                <span className="text-sm font-medium">{currentCompany.ratings.culture}</span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <Separator className="my-4" />
-                      
-                      <div className="mb-4">
-                        <h3 className="font-medium mb-2">About</h3>
-                        <p className="text-gray-700 dark:text-gray-300">{currentCompany.overview}</p>
-                      </div>
-                      
-                      <div className="mb-4">
-                        <h3 className="font-medium mb-2">Specialties</h3>
-                        <div className="flex flex-wrap gap-2">
-                          {currentCompany.specialties.map((specialty, index) => (
-                            <Badge key={index} variant="outline" className="bg-gray-50 dark:bg-gray-800">
-                              {specialty}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                      
-                      <Separator className="my-4" />
-                      
-                      <div>
-                        <h3 className="font-medium mb-4">Featured Reviews</h3>
-                        <div className="space-y-6">
-                          {currentCompany.featuredReviews.map((review) => (
-                            <div key={review.id} className="p-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
-                              <div className="flex items-center justify-between mb-3">
-                                <h4 className="font-medium">{review.title}</h4>
-                                <div className="flex items-center text-yellow-500">
-                                  {[...Array(5)].map((_, i) => (
-                                    <Star 
-                                      key={i} 
-                                      className={`h-4 w-4 ${i < review.rating ? 'fill-current' : 'text-gray-300 dark:text-gray-600'}`} 
-                                    />
-                                  ))}
-                                </div>
-                              </div>
-                              <div className="mb-3 text-sm text-gray-600 dark:text-gray-400">
-                                <div>{review.position} | {review.employment}</div>
-                                <div>{review.location} | {review.date}</div>
-                              </div>
-                              
-                              <div className="mb-3">
-                                <div className="text-sm font-medium mb-1 text-green-600 dark:text-green-400">Pros</div>
-                                <p className="text-sm text-gray-700 dark:text-gray-300">{review.pros}</p>
-                              </div>
-                              
-                              <div className="mb-3">
-                                <div className="text-sm font-medium mb-1 text-red-600 dark:text-red-400">Cons</div>
-                                <p className="text-sm text-gray-700 dark:text-gray-300">{review.cons}</p>
-                              </div>
-                              
-                              <div className="flex items-center justify-between mt-4 text-sm">
-                                <div className="text-gray-500 dark:text-gray-400">
-                                  {review.helpfulCount} people found this helpful
-                                </div>
-                                <div className="flex gap-2">
-                                  <Button variant="ghost" size="sm" className="h-8 px-2 text-gray-600 dark:text-gray-300">
-                                    <ThumbsUp className="h-4 w-4 mr-1" />
-                                    Helpful
-                                  </Button>
-                                  <Button variant="ghost" size="sm" className="h-8 px-2 text-gray-600 dark:text-gray-300">
-                                    <ThumbsDown className="h-4 w-4 mr-1" />
-                                    Not Helpful
-                                  </Button>
-                                </div>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                        
-                        <div className="mt-6 flex justify-center">
-                          <Button>See All Reviews</Button>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-              )}
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="salaries" className="mt-0">
-            <div className="grid grid-cols-1 gap-6">
-              <Card className="linkedin-card mb-4">
-                <CardHeader>
-                  <CardTitle className="text-xl">Salary Explorer</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                      <h3 className="font-medium mb-3">Salaries by Industry</h3>
-                      <div className="h-80">
-                        <div className="bg-white dark:bg-gray-800 p-4 rounded-lg h-full">
-                          <div className="h-full">
-                            {industryData.map((item, index) => (
-                              <div key={index} className="flex items-center justify-between mb-3">
-                                <span className="text-sm">{item.name}</span>
-                                <span className="font-medium">{formatCurrency(item.salary)}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <h3 className="font-medium mb-3">Salaries by Role</h3>
-                      <div className="h-80">
-                        <div className="bg-white dark:bg-gray-800 p-4 rounded-lg h-full">
-                          <div className="h-full">
-                            {roleData.map((item, index) => (
-                              <div key={index} className="flex items-center justify-between mb-3">
-                                <span className="text-sm">{item.name}</span>
-                                <span className="font-medium">{formatCurrency(item.salary)}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                      <h3 className="font-medium mb-3">Salaries by Experience Level</h3>
-                      <div className="h-80">
-                        <div className="bg-white dark:bg-gray-800 p-4 rounded-lg h-full">
-                          <div className="h-full">
-                            {experienceData.map((item, index) => (
-                              <div key={index} className="flex items-center justify-between mb-3">
-                                <span className="text-sm">{item.name}</span>
-                                <span className="font-medium">{formatCurrency(item.salary)}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <h3 className="font-medium mb-3">Salaries by Location</h3>
-                      <div className="h-80">
-                        <div className="bg-white dark:bg-gray-800 p-4 rounded-lg h-full">
-                          <div className="h-full">
-                            {locationData.map((item, index) => (
-                              <div key={index} className="flex items-center justify-between mb-3">
-                                <span className="text-sm">{item.name}</span>
-                                <span className="font-medium">{formatCurrency(item.salary)}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <Separator className="my-6" />
-                  
-                  <div className="mb-6">
-                    <h3 className="font-medium mb-6 text-lg">Salary Distribution</h3>
-                    <div className="h-80">
-                      <div className="bg-white dark:bg-gray-800 p-4 rounded-lg h-full">
-                        <div className="h-full">
-                          {salaryRangeData.map((item, index) => (
-                            <div key={index} className="mb-3">
-                              <div className="flex items-center justify-between mb-1">
-                                <span className="text-sm">{item.range}</span>
-                                <span className="text-sm text-gray-500">{item.count}%</span>
-                              </div>
-                              <Progress value={item.count} className="h-2" />
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <h3 className="font-medium mb-4 text-lg">Salary Negotiation Tips</h3>
-                    <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 rounded-lg p-4 mb-6">
-                      <div className="flex items-start">
-                        <div className="flex-shrink-0 bg-blue-100 dark:bg-blue-800 rounded-full p-2">
-                          <LightbulbIcon className="h-5 w-5 text-blue-600 dark:text-blue-300" />
-                        </div>
-                        <div className="ml-3">
-                          <h4 className="text-sm font-medium text-blue-800 dark:text-blue-300">Research thoroughly</h4>
-                          <p className="text-sm text-blue-700 dark:text-blue-400 mt-1">
-                            Use this salary data to understand the market rate for your role, experience level, and location.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <ul className="space-y-3 list-disc pl-5 text-sm text-gray-700 dark:text-gray-300">
-                      <li>Know your market value based on experience, skills, and location</li>
-                      <li>Practice your negotiation talking points ahead of time</li>
-                      <li>Consider the entire compensation package, not just the base salary</li>
-                      <li>Be ready to highlight your accomplishments and the value you bring</li>
-                      <li>Don't be afraid to counter-offer if the initial offer is below expectations</li>
-                    </ul>
-                    
-                    <div className="mt-6 flex justify-center">
-                      <Button className="bg-linkedin-blue hover:bg-linkedin-darkBlue">
-                        Get Personalized Salary Insights
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
-        </Tabs>
-      </div>
-    </div>
-  );
-};
-
-export default Jobs;
+    { name: 'DevOps Engineer', salary: 128000 },
+    { name: 'Business Analyst', salary: 92000 },
+    { name: 'Project Manager', salary: 115000 },
+    { name: 'Systems Administrator', salary:

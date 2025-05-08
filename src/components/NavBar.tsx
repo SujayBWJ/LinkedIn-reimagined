@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Bell, Home, Search, Users, Briefcase, User, LogOut, Settings, Moon, Sun, DollarSign } from 'lucide-react';
+import { Bell, Home, Search, Users, Briefcase, User, LogOut, Settings, Moon, Sun } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import {
   DropdownMenu,
@@ -75,13 +75,6 @@ const NavBar = () => {
               <User className={`h-6 w-6 ${isActive('/your-space') ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : ''}`} />
               <span>Your Space</span>
             </Link>
-            <Link 
-              to="/salaries" 
-              className={`flex flex-col items-center px-3 py-2 text-sm font-medium ${isActive('/salaries') ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : 'text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue'}`}
-            >
-              <DollarSign className={`h-6 w-6 ${isActive('/salaries') ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : ''}`} />
-              <span>Salaries</span>
-            </Link>
           </div>
           
           <div className="flex items-center space-x-4">
@@ -98,8 +91,8 @@ const NavBar = () => {
               <DropdownMenuTrigger className="focus:outline-none">
                 <div className="flex items-center">
                   <Avatar className="h-8 w-8">
-                    <AvatarImage src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80" alt="John Doe" />
-                    <AvatarFallback className="bg-linkedin-blue text-white">JD</AvatarFallback>
+                    <AvatarImage src="https://images.unsplash.com/photo-1501286353178-1ec881214838?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80" alt="Zero" />
+                    <AvatarFallback className="bg-linkedin-blue text-white">Z</AvatarFallback>
                   </Avatar>
                 </div>
               </DropdownMenuTrigger>
@@ -107,11 +100,11 @@ const NavBar = () => {
                 <div className="p-2">
                   <div className="flex items-center">
                     <Avatar className="h-10 w-10">
-                      <AvatarImage src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80" alt="John Doe" />
-                      <AvatarFallback className="bg-linkedin-blue text-white">JD</AvatarFallback>
+                      <AvatarImage src="https://images.unsplash.com/photo-1501286353178-1ec881214838?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80" alt="Zero" />
+                      <AvatarFallback className="bg-linkedin-blue text-white">Z</AvatarFallback>
                     </Avatar>
                     <div className="ml-3">
-                      <p className="text-sm font-medium">John Doe</p>
+                      <p className="text-sm font-medium">Zero</p>
                       <p className="text-xs text-gray-500 dark:text-gray-400">Software Engineer</p>
                     </div>
                   </div>
@@ -181,13 +174,6 @@ const NavBar = () => {
           >
             <User className={`h-6 w-6 ${isActive('/your-space') ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : ''}`} />
             <span>Your Space</span>
-          </Link>
-          <Link 
-            to="/salaries" 
-            className={`flex flex-col items-center pt-2 pb-1 flex-1 text-xs font-medium ${isActive('/salaries') ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : 'text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue'}`}
-          >
-            <DollarSign className={`h-6 w-6 ${isActive('/salaries') ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : ''}`} />
-            <span>Salaries</span>
           </Link>
         </div>
       </div>
