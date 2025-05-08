@@ -10,6 +10,7 @@ import YourSpace from "./pages/YourSpace";
 import Network from "./pages/Network";
 import Jobs from "./pages/Jobs";
 import Profile from "./pages/Profile";
+import Notifications from "./pages/Notifications";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,10 +24,11 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/your-space" element={<YourSpace />} />
             <Route path="/network" element={<Network />} />
             <Route path="/jobs" element={<Jobs />} />
+            <Route path="/your-space" element={<YourSpace />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/notifications" element={<Notifications />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

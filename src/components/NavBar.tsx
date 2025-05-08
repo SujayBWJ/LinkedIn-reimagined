@@ -45,10 +45,6 @@ const NavBar = () => {
               <Home className="h-6 w-6" />
               <span>Home</span>
             </Link>
-            <Link to="/your-space" className="flex flex-col items-center px-3 py-2 text-sm font-medium text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue">
-              <User className="h-6 w-6" />
-              <span>Your Space</span>
-            </Link>
             <Link to="/network" className="flex flex-col items-center px-3 py-2 text-sm font-medium text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue">
               <Users className="h-6 w-6" />
               <span>Network</span>
@@ -57,14 +53,18 @@ const NavBar = () => {
               <Briefcase className="h-6 w-6" />
               <span>Jobs</span>
             </Link>
+            <Link to="/your-space" className="flex flex-col items-center px-3 py-2 text-sm font-medium text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue">
+              <User className="h-6 w-6" />
+              <span>Your Space</span>
+            </Link>
           </div>
           
           <div className="flex items-center space-x-4">
-            <button className="relative p-1 rounded-full text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue">
+            <Link to="/notifications" className="relative p-1 rounded-full text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue">
               <span className="sr-only">Notifications</span>
               <Bell className="h-6 w-6" />
               <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500"></span>
-            </button>
+            </Link>
             
             <DropdownMenu>
               <DropdownMenuTrigger className="focus:outline-none">
@@ -128,10 +128,6 @@ const NavBar = () => {
             <Home className="h-6 w-6" />
             <span>Home</span>
           </Link>
-          <Link to="/your-space" className="flex flex-col items-center pt-2 pb-1 flex-1 text-xs font-medium text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue">
-            <User className="h-6 w-6" />
-            <span>Your Space</span>
-          </Link>
           <Link to="/network" className="flex flex-col items-center pt-2 pb-1 flex-1 text-xs font-medium text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue">
             <Users className="h-6 w-6" />
             <span>Network</span>
@@ -139,6 +135,10 @@ const NavBar = () => {
           <Link to="/jobs" className="flex flex-col items-center pt-2 pb-1 flex-1 text-xs font-medium text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue">
             <Briefcase className="h-6 w-6" />
             <span>Jobs</span>
+          </Link>
+          <Link to="/your-space" className="flex flex-col items-center pt-2 pb-1 flex-1 text-xs font-medium text-gray-500 dark:text-gray-300 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue">
+            <User className="h-6 w-6" />
+            <span>Your Space</span>
           </Link>
         </div>
       </div>
