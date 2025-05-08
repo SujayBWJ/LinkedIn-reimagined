@@ -142,7 +142,7 @@ const Profile = () => {
           title: 'Product Manager at Tech Innovations Inc.',
           avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80'
         },
-        text: "John is an exceptional engineer who consistently delivers high-quality code. His problem-solving skills and ability to collaborate cross-functionally make him a valuable asset to any team. I had the pleasure of working with him on several key projects, and his technical expertise was instrumental in their success.",
+        text: 'John is an exceptional engineer who consistently delivers high-quality code. His problem-solving skills and ability to collaborate cross-functionally make him a valuable asset to any team. I had the pleasure of working with him on several key projects, and his technical expertise was instrumental in their success.',
         date: 'January 2024'
       },
       {
@@ -152,7 +152,7 @@ const Profile = () => {
           title: 'CTO at Global Tech',
           avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80'
         },
-        text: "Having managed John for over two years, I can confidently say he is one of the most dedicated and skilled developers I've worked with. He not only excels in technical implementation but also mentors junior developers effectively. His contributions significantly improved our product quality and team productivity.",
+        text: 'Having managed John for over two years, I can confidently say he is one of the most dedicated and skilled developers I\'ve worked with. He not only excels in technical implementation but also mentors junior developers effectively. His contributions significantly improved our product quality and team productivity.',
         date: 'November 2022'
       }
     ]
@@ -234,6 +234,11 @@ const Profile = () => {
   };
 
   const filteredContent = getFilteredContent();
+  // Make sure filteredContent is always treated correctly based on the expected type
+  const isEmptyContent = 
+    filteredContent === null || 
+    filteredContent === undefined || 
+    (Array.isArray(filteredContent) && filteredContent.length === 0);
 
   return (
     <div className="min-h-screen bg-linkedin-lightGrey dark:bg-linkedin-darkGrey">
@@ -366,7 +371,7 @@ const Profile = () => {
                 
                 {/* About Section */}
                 <TabsContent value="about" className="p-6">
-                  {filteredContent ? (
+                  {!isEmptyContent && activeTab === 'about' ? (
                     <>
                       <h2 className="text-xl font-semibold mb-4">About</h2>
                       <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line">{filteredContent}</p>
@@ -387,7 +392,7 @@ const Profile = () => {
                     </Button>
                   </div>
                   
-                  {filteredContent && filteredContent.length > 0 ? (
+                  {!isEmptyContent && activeTab === 'experience' && Array.isArray(filteredContent) ? (
                     <div className="space-y-6">
                       {filteredContent.map((exp) => (
                         <div key={exp.id} className="flex">
@@ -424,7 +429,7 @@ const Profile = () => {
                     </Button>
                   </div>
                   
-                  {filteredContent && filteredContent.length > 0 ? (
+                  {!isEmptyContent && activeTab === 'education' && Array.isArray(filteredContent) ? (
                     <div className="space-y-6">
                       {filteredContent.map((edu) => (
                         <div key={edu.id} className="flex">
@@ -462,7 +467,7 @@ const Profile = () => {
                     </Button>
                   </div>
                   
-                  {filteredContent && filteredContent.length > 0 ? (
+                  {!isEmptyContent && activeTab === 'skills' && Array.isArray(filteredContent) ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {filteredContent.map((skill, index) => (
                         <div key={index} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
@@ -489,7 +494,7 @@ const Profile = () => {
                     </Button>
                   </div>
                   
-                  {filteredContent && filteredContent.length > 0 ? (
+                  {!isEmptyContent && activeTab === 'certifications' && Array.isArray(filteredContent) ? (
                     <div className="space-y-6">
                       {filteredContent.map((cert) => (
                         <div key={cert.id} className="flex">
@@ -527,7 +532,7 @@ const Profile = () => {
                     </Button>
                   </div>
                   
-                  {filteredContent && filteredContent.length > 0 ? (
+                  {!isEmptyContent && activeTab === 'projects' && Array.isArray(filteredContent) ? (
                     <div className="space-y-6">
                       {filteredContent.map((project) => (
                         <div key={project.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
@@ -565,7 +570,7 @@ const Profile = () => {
                     </Button>
                   </div>
                   
-                  {filteredContent && filteredContent.length > 0 ? (
+                  {!isEmptyContent && activeTab === 'recommendations' && Array.isArray(filteredContent) ? (
                     <div className="space-y-6">
                       {filteredContent.map((rec) => (
                         <div key={rec.id} className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4">
