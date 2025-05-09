@@ -14,8 +14,15 @@ import Notifications from "./pages/Notifications";
 import CompanyPage from "./pages/CompanyPage";
 import NotFound from "./pages/NotFound";
 
-const queryClient = new QueryClient();
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider>
@@ -26,12 +33,13 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/network" element={<Network />} />
-            <Route path="/jobs" element={<Jobs />} />
+            <Route path="/jobs/*" element={<Jobs />} />
             <Route path="/your-space" element={<YourSpace />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/notifications" element={<Notifications />} />
             <Route path="/company/:id" element={<CompanyPage />} />
             <Route path="/news" element={<Index />} />
+            <Route path="/jobs" element={<Jobs />} />
             <Route path="/hashtag/:tag" element={<Index />} />
             <Route path="/saved/:type" element={<YourSpace />} />
             <Route path="/content/:type" element={<YourSpace />} />

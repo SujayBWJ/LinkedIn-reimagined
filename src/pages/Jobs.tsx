@@ -1,696 +1,1304 @@
+
 import React, { useState } from 'react';
-import NavBar from '../components/NavBar';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import CustomNavbar from '@/components/NavBar';
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
-  Bookmark, 
-  ChevronDown, 
-  Filter, 
-  MapPin, 
   Search, 
-  Star, 
-  X, 
-  Building, 
-  ThumbsUp, 
-  ThumbsDown, 
-  Heart, 
-  MessageSquare,
-  LightbulbIcon
+  MapPin, 
+  Briefcase, 
+  Clock, 
+  Filter, 
+  Save,
+  CheckCircle2,
+  Calendar,
+  ListTodo,
+  Star,
+  Building,
+  Users,
+  DollarSign,
+  TrendingUp,
+  FileText
 } from 'lucide-react';
-import { Separator } from '@/components/ui/separator';
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Progress } from "@/components/ui/progress";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
 
-const Jobs = () => {
-  const [activeTab, setActiveTab] = useState('discover');
-  const [selectedJob, setSelectedJob] = useState<number | null>(1);
-  const [selectedCompany, setSelectedCompany] = useState<number | null>(1);
-  
-  // Mock job listings data
+const JobListings = () => {
+  const [activeFilter, setActiveFilter] = useState('all');
+
   const jobListings = [
-    { 
-      id: 1, 
-      title: 'Senior Frontend Developer', 
-      company: 'Tech Solutions Inc', 
-      location: 'San Francisco, CA (Remote)', 
-      posted: '2 days ago',
-      applicants: 32,
-      salary: '$120,000 - $150,000',
-      description: 'We are looking for an experienced Frontend Developer to join our team. You will be responsible for building user-facing features, optimizing applications for maximum speed, and implementing responsive design.',
-      requirements: [
-        'At least 4 years experience with JavaScript frameworks (React preferred)',
-        'Strong knowledge of HTML5, CSS3, and modern web standards',
-        'Experience with responsive design and cross-browser compatibility',
-        'Familiarity with RESTful APIs and GraphQL',
-        'Bachelor\'s degree in Computer Science or related field'
-      ],
-      benefits: [
-        'Competitive salary and equity package',
-        'Comprehensive health, dental, and vision insurance',
-        'Unlimited PTO policy',
-        'Remote-first culture with quarterly team retreats',
-        '401(k) matching'
-      ]
-    },
-    { 
-      id: 2, 
-      title: 'Product Manager', 
-      company: 'Innovative Apps', 
-      location: 'New York, NY (Hybrid)', 
-      posted: '1 week ago',
-      applicants: 78,
-      salary: '$130,000 - $160,000',
-      description: 'We\'re seeking a Product Manager to lead our product development process from conception to launch. You\'ll work with cross-functional teams to define product strategy and roadmap.',
-      requirements: [
-        '3+ years experience as a Product Manager',
-        'Strong analytical and problem-solving skills',
-        'Experience with agile methodologies',
-        'Excellent communication and stakeholder management skills',
-        'Bachelor\'s degree in Business, Engineering, or related field'
-      ],
-      benefits: [
-        'Competitive compensation package',
-        'Full benefits coverage',
-        'Flexible work arrangements',
-        'Professional development budget',
-        'Generous parental leave policy'
-      ]
-    },
-    { 
-      id: 3, 
-      title: 'UI/UX Designer', 
-      company: 'Creative Design Studio', 
-      location: 'Austin, TX (On-site)', 
-      posted: '3 days ago',
-      applicants: 45,
-      salary: '$90,000 - $120,000',
-      description: 'Join our creative team to design beautiful, intuitive interfaces for web and mobile applications. You\'ll collaborate with developers and stakeholders to create exceptional user experiences.',
-      requirements: [
-        'Portfolio demonstrating UI/UX projects',
-        'Proficiency with design tools (Figma, Sketch, Adobe XD)',
-        'Understanding of user-centered design principles',
-        'Experience conducting user research and usability testing',
-        'Strong visual design skills'
-      ],
-      benefits: [
-        'Competitive salary',
-        'Health, dental, and vision insurance',
-        'Creative workspace with latest equipment',
-        'Continuing education stipend',
-        'Regular team building events'
-      ]
-    },
-    { 
-      id: 4, 
-      title: 'Data Scientist', 
-      company: 'Analytics Insights Group', 
-      location: 'Remote (US-based)', 
-      posted: '1 day ago',
-      applicants: 19,
-      salary: '$115,000 - $145,000',
-      description: 'We are looking for a Data Scientist to analyze complex data sets and build predictive models. You will help extract valuable insights from data to inform business decisions.',
-      requirements: [
-        'MS or PhD in Statistics, Mathematics, Computer Science, or related field',
-        'Experience with Python, R, or similar data analysis tools',
-        'Strong background in machine learning techniques',
-        'Experience with SQL and database management',
-        'Excellent problem-solving and communication skills'
-      ],
-      benefits: [
-        'Competitive salary based on experience',
-        'Comprehensive benefits package',
-        'Flexible remote work policy',
-        'Professional development opportunities',
-        'Company-wide wellness program'
-      ]
-    }
-  ];
-  
-  // Mock application tracker data
-  const applications = [
-    { 
-      id: 1, 
-      title: 'Full Stack Developer', 
-      company: 'Tech Innovations Inc', 
-      status: 'Applied', 
-      date: 'May 5, 2025' 
-    },
-    { 
-      id: 2, 
-      title: 'Senior Product Designer', 
-      company: 'Design Solutions', 
-      status: 'Interview', 
-      date: 'May 2, 2025' 
-    },
-    { 
-      id: 3, 
-      title: 'Marketing Manager', 
-      company: 'Brand Builders', 
-      status: 'Saved', 
-      date: 'May 1, 2025' 
-    }
-  ];
-  
-  // Mock company reviews data - EXPANDED
-  const companyReviews = [
     {
       id: 1,
-      name: "Tech Solutions Inc",
-      logo: "TS",
-      rating: 4.7,
-      reviews: 1284,
-      industry: "Information Technology",
-      size: "1,001-5,000 employees",
-      type: "Public Company",
-      founded: 2005,
-      headquarters: "San Francisco, CA",
-      website: "techsolutions.com",
-      overview: "Tech Solutions Inc is a leading technology company specializing in AI and machine learning solutions for enterprise customers. They have been at the forefront of digital transformation, helping businesses leverage advanced technologies to drive innovation and operational excellence.",
-      mission: "To transform the way businesses operate through cutting-edge AI technology and exceptional service.",
-      specialties: ["Artificial Intelligence", "Machine Learning", "Cloud Computing", "Enterprise Software", "Data Analytics", "DevOps", "Digital Transformation", "SaaS Solutions"],
-      featuredReviews: [
-        {
-          id: 101,
-          title: "Great work environment and challenging projects",
-          rating: 5,
-          position: "Senior Software Engineer",
-          employment: "Current Employee - 2 years",
-          location: "San Francisco, CA",
-          date: "April 12, 2025",
-          pros: "Excellent work-life balance, competitive compensation, latest technologies, strong engineering culture, and great opportunities for growth. The company truly invests in professional development and provides resources for learning new skills. Leadership is transparent about company direction and challenges.",
-          cons: "Some teams face tight deadlines that can create pressure, and the pace of work can be demanding for new employees. The rapid growth means processes are sometimes still being figured out. Occasional communication gaps between departments.",
-          helpfulCount: 87
-        },
-        {
-          id: 102,
-          title: "Good benefits but difficult management",
-          rating: 3,
-          position: "Product Manager",
-          employment: "Former Employee - 3 years",
-          location: "San Francisco, CA",
-          date: "March 5, 2025",
-          pros: "Great benefits and compensation package. Some really talented engineers and designers to work with. The company offers excellent learning opportunities and has strong technical expertise. The office environment is comfortable and well-equipped.",
-          cons: "Middle management is disorganized and there's often conflicting priorities between departments. Decision-making can be slow due to excessive bureaucracy. Some managers lack people skills and focus too much on metrics rather than team well-being.",
-          helpfulCount: 53
-        },
-        {
-          id: 103,
-          title: "Innovative company with great potential",
-          rating: 4,
-          position: "AI Research Scientist",
-          employment: "Current Employee - 1 year",
-          location: "Boston, MA",
-          date: "February 18, 2025",
-          pros: "Working on cutting-edge AI technology that has real-world impact. Strong research team with industry leaders. Good collaboration between research and engineering teams. Flexible work arrangements and competitive compensation package.",
-          cons: "Sometimes research priorities change too quickly based on market demands. Could improve communication between leadership and individual contributors about strategic changes. Some projects get abandoned without clear explanations.",
-          helpfulCount: 42
-        },
-        {
-          id: 104,
-          title: "Excellent for career growth but demanding",
-          rating: 4,
-          position: "Technical Project Manager",
-          employment: "Current Employee - 3 years",
-          location: "Remote",
-          date: "January 5, 2025",
-          pros: "Fantastic opportunities for career advancement. Working with latest technologies and methodologies. Strong emphasis on professional development with generous learning budget. Great remote work policy with proper tools and support.",
-          cons: "Work-life balance can be challenging during critical project phases. High expectations can lead to stress if you don't manage boundaries well. Some teams are understaffed which leads to occasional overwork.",
-          helpfulCount: 38
-        }
-      ],
-      ratings: {
-        overall: 4.7,
-        workLifeBalance: 4.5,
-        compensation: 4.8,
-        jobSecurity: 4.6,
-        management: 4.2,
-        culture: 4.9
-      },
-      benefits: [
-        { name: "Health Insurance", rating: 4.8 },
-        { name: "Vacation & Time Off", rating: 4.7 },
-        { name: "Retirement Benefits", rating: 4.5 },
-        { name: "Parental Leave", rating: 4.9 },
-        { name: "Learning & Development", rating: 4.6 }
-      ],
-      interviews: [
-        {
-          position: "Software Engineer",
-          experience: "Positive",
-          difficulty: "Average",
-          offers: "Yes",
-          process: "Applied online, had an initial screening call with HR, followed by a technical assessment. Then two rounds of technical interviews with team members and a final interview with the engineering manager.",
-          questions: [
-            "Describe a challenging project you worked on and how you approached it.",
-            "How would you design a distributed system for high availability?",
-            "Coding exercise involving algorithm optimization."
-          ]
-        },
-        {
-          position: "Product Manager",
-          experience: "Neutral",
-          difficulty: "Difficult",
-          offers: "No",
-          process: "Employee referral, followed by screening call, case study presentation, and panel interviews with cross-functional team members.",
-          questions: [
-            "How would you prioritize features for our main product?",
-            "Describe how you would validate a new product idea.",
-            "Tell us about a time you had to make a difficult product decision."
-          ]
-        }
+      title: "Senior Software Engineer",
+      company: "TechCorp Inc.",
+      logo: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=100&h=100&auto=format&fit=crop",
+      location: "San Francisco, CA (Remote)",
+      type: "Full-time",
+      salary: "$120,000 - $150,000",
+      posted: "2 days ago",
+      saved: true,
+      description: "We're looking for an experienced software engineer to join our team and help build scalable cloud applications.",
+      requirements: [
+        "5+ years of experience with React and Node.js",
+        "Experience with cloud services (AWS or Azure)",
+        "Strong communication skills"
       ]
     },
     {
       id: 2,
-      name: "Global Financial Group",
-      logo: "GF",
-      rating: 3.9,
-      reviews: 3562,
-      industry: "Financial Services",
-      size: "10,000+ employees",
-      type: "Public Company",
-      founded: 1985,
-      headquarters: "New York, NY",
-      website: "globalfinancial.com",
-      overview: "Global Financial Group is one of the world's leading financial services corporations, providing banking, insurance, investments, and retirement services. With a presence in over 30 countries, they serve millions of customers worldwide through innovative financial solutions and trusted advice.",
-      mission: "To empower our customers' financial well-being through trusted advice and innovative solutions.",
-      specialties: ["Banking", "Asset Management", "Wealth Management", "Insurance", "Investment Banking", "Financial Planning", "Retirement Services", "Mortgage Lending"],
-      featuredReviews: [
-        {
-          id: 201,
-          title: "Stable career but traditional culture",
-          rating: 4,
-          position: "Financial Analyst",
-          employment: "Current Employee - 4 years",
-          location: "New York, NY",
-          date: "March 28, 2025",
-          pros: "Stable work environment, good benefits, opportunities for internal movement, and respected name in the industry. The training programs are comprehensive and there's a clear career path if you want to advance. Good mentorship opportunities from experienced professionals.",
-          cons: "Traditional corporate culture that can be slow to adopt change. Work can be repetitive in some departments. The bureaucracy can be frustrating when trying to implement new ideas or processes. Technology stack is sometimes outdated compared to fintech companies.",
-          helpfulCount: 124
-        },
-        {
-          id: 202,
-          title: "High pressure but high rewards",
-          rating: 3,
-          position: "Investment Banking Associate",
-          employment: "Former Employee - 1 year",
-          location: "London, UK",
-          date: "February 15, 2025",
-          pros: "Excellent compensation and bonus structure. Great learning opportunities and exposure to major deals. Working with top-tier clients and on significant transactions provides valuable experience. The prestige of the firm opens doors for future career opportunities.",
-          cons: "Extremely long hours and high pressure environment. Work-life balance is practically non-existent in some divisions. Highly competitive culture that can sometimes feel cutthroat. Management can be impersonal and focused solely on results without regard to employee wellbeing.",
-          helpfulCount: 98
-        },
-        {
-          id: 203,
-          title: "Good for learning fundamentals",
-          rating: 4,
-          position: "Risk Management Analyst",
-          employment: "Former Employee - 2 years",
-          location: "Chicago, IL",
-          date: "January 10, 2025",
-          pros: "Strong training program that builds fundamental financial knowledge. Exposure to various financial products and markets. Good networking opportunities within the industry. Compensation is competitive with good bonuses in profitable years.",
-          cons: "Conservative approach to innovation can be frustrating. Some departments are siloed with little cross-functional collaboration. Career advancement can be slow unless you're in a high-visibility role or have a strong sponsor.",
-          helpfulCount: 65
-        },
-        {
-          id: 204,
-          title: "Improving work-life balance",
-          rating: 4,
-          position: "Senior Relationship Manager",
-          employment: "Current Employee - 5 years",
-          location: "Singapore",
-          date: "April 2, 2025",
-          pros: "The company has made significant improvements in work-life balance policies in recent years. Good client exposure and relationship building opportunities. Excellent international career opportunities with potential for relocation or travel.",
-          cons: "Still lags behind tech companies in terms of flexible work arrangements. Legacy systems can make some processes unnecessarily complex. Regulatory requirements create additional administrative burden that can be tedious.",
-          helpfulCount: 82
-        }
-      ],
-      ratings: {
-        overall: 3.9,
-        workLifeBalance: 3.2,
-        compensation: 4.5,
-        jobSecurity: 4.3,
-        management: 3.7,
-        culture: 3.8
-      },
-      benefits: [
-        { name: "Health Insurance", rating: 4.5 },
-        { name: "Vacation & Time Off", rating: 3.2 },
-        { name: "Retirement Benefits", rating: 4.8 },
-        { name: "Parental Leave", rating: 3.5 },
-        { name: "Learning & Development", rating: 4.2 }
-      ],
-      interviews: [
-        {
-          position: "Financial Analyst",
-          experience: "Positive",
-          difficulty: "Difficult",
-          offers: "Yes",
-          process: "Three rounds of interviews: HR screening, technical interview with team lead, final panel interview with senior management.",
-          questions: [
-            "Describe how you would value a company that's considering an IPO.",
-            "How would you analyze the risk of a potential investment?",
-            "Technical questions about financial modeling and Excel proficiency."
-          ]
-        },
-        {
-          position: "Wealth Management Advisor",
-          experience: "Positive",
-          difficulty: "Average",
-          offers: "Yes",
-          process: "Initial phone screening, personality assessment, in-person interview with regional manager, and final interview with team.",
-          questions: [
-            "How would you approach building a client portfolio?",
-            "Describe your experience with high-net-worth clients.",
-            "Role-playing exercise handling difficult client scenarios."
-          ]
-        }
+      title: "Product Manager",
+      company: "InnovateNow",
+      logo: "https://images.unsplash.com/photo-1549421263-5ec394a5ad4c?w=100&h=100&auto=format&fit=crop",
+      location: "New York, NY",
+      type: "Full-time",
+      salary: "$115,000 - $140,000",
+      posted: "3 days ago",
+      saved: false,
+      description: "Lead product development for our SaaS platform, working with cross-functional teams to deliver exceptional user experiences.",
+      requirements: [
+        "3+ years of product management experience",
+        "Background in B2B software",
+        "MBA preferred but not required"
       ]
     },
     {
       id: 3,
-      name: "Creative Design Studio",
-      logo: "CD",
-      rating: 4.5,
-      reviews: 872,
-      industry: "Design",
-      size: "501-1,000 employees",
-      type: "Private Company",
-      founded: 2010,
-      headquarters: "Austin, TX",
-      website: "creativedesign.com",
-      overview: "Creative Design Studio is an award-winning design firm that specializes in UI/UX design, branding, and digital experiences. The studio has worked with Fortune 500 companies as well as innovative startups to create compelling visual identities and user experiences that drive business results.",
-      mission: "To transform brands through innovative design that connects emotionally with audiences and drives meaningful engagement.",
-      specialties: ["UI/UX Design", "Brand Identity", "Digital Marketing", "Web Development", "Mobile App Design", "Motion Graphics", "Interactive Experiences", "Packaging Design"],
-      featuredReviews: [
-        {
-          id: 301,
-          title: "Creative freedom and supportive team",
-          rating: 5,
-          position: "Senior UI Designer",
-          employment: "Current Employee - 3 years",
-          location: "Austin, TX",
-          date: "May 1, 2025",
-          pros: "Creative freedom, collaborative environment, cutting-edge projects, and supportive management that values design. The studio encourages experimentation and innovation, with time dedicated to creative exploration. Regular design workshops and knowledge sharing sessions keep skills sharp. Leadership recognizes and rewards good work consistently.",
-          cons: "Client deadlines can sometimes create crunch periods. Some processes could be more streamlined. Project management tools change frequently as the company tries to optimize workflows, which can create temporary confusion. Sometimes communication between departments could be improved.",
-          helpfulCount: 67
-        },
-        {
-          id: 302,
-          title: "Great for junior designers, limited growth",
-          rating: 4,
-          position: "Junior Designer",
-          employment: "Current Employee - 1 year",
-          location: "Remote",
-          date: "April 19, 2025",
-          pros: "Excellent mentorship program, diverse projects, flexible remote work policy, and good starting salary. The onboarding process is thorough and supportive. Regular feedback helps improve skills quickly. Access to latest design tools and resources. Fun team culture with virtual social events.",
-          cons: "Limited clear path for advancement beyond senior designer roles. Company is growing fast which creates some growing pains. Sometimes workload distribution isn't even across the team. Decision making can be slow on larger projects with multiple stakeholders.",
-          helpfulCount: 42
-        },
-        {
-          id: 303,
-          title: "Inspiring work culture but demanding pace",
-          rating: 4,
-          position: "UX Researcher",
-          employment: "Current Employee - 2 years",
-          location: "Austin, TX",
-          date: "March 15, 2025",
-          pros: "Working with innovative clients on meaningful projects. Research is highly valued and integrated into the design process. Competitive compensation and good benefits. The team is diverse and brings different perspectives to projects. Leadership is accessible and open to feedback.",
-          cons: "Fast-paced environment can sometimes prioritize speed over depth of research. Client expectations can be challenging to manage. Some projects have tight budgets that limit research scope. Work can spill into evenings during busy periods.",
-          helpfulCount: 53
-        },
-        {
-          id: 304,
-          title: "Amazing portfolio builder",
-          rating: 5,
-          position: "Graphic Designer",
-          employment: "Former Employee - 2 years",
-          location: "New York, NY",
-          date: "February 8, 2025",
-          pros: "Opportunity to work on high-profile brands and campaigns that look impressive in your portfolio. Strong creative direction that pushes your skills to new levels. Collaborative team environment where ideas are welcomed from everyone regardless of seniority. Regular creative reviews provide valuable feedback.",
-          cons: "Workload can be intense during peak periods. Some clients have very tight turnaround times. The emphasis on visual excellence means multiple revisions are common, which can be exhausting. Benefits package could be more competitive for the industry.",
-          helpfulCount: 38
-        }
-      ],
-      ratings: {
-        overall: 4.5,
-        workLifeBalance: 4.3,
-        compensation: 4.0,
-        jobSecurity: 4.2,
-        management: 4.6,
-        culture: 4.8
-      },
-      benefits: [
-        { name: "Health Insurance", rating: 4.2 },
-        { name: "Vacation & Time Off", rating: 4.5 },
-        { name: "Retirement Benefits", rating: 3.8 },
-        { name: "Parental Leave", rating: 4.4 },
-        { name: "Learning & Development", rating: 4.9 }
-      ],
-      interviews: [
-        {
-          position: "UI/UX Designer",
-          experience: "Positive",
-          difficulty: "Average",
-          offers: "Yes",
-          process: "Portfolio review, design challenge, two rounds of interviews with the design team and creative director.",
-          questions: [
-            "Walk us through your design process for a recent project.",
-            "How do you incorporate user feedback into your designs?",
-            "Design exercise: redesign a problematic user interface."
-          ]
-        },
-        {
-          position: "Art Director",
-          experience: "Positive",
-          difficulty: "Difficult",
-          offers: "Yes",
-          process: "Portfolio presentation, case study analysis, team interview, and final interview with creative leadership.",
-          questions: [
-            "How do you balance creative vision with client requirements?",
-            "Describe how you would lead a team through a rebranding project.",
-            "How do you stay current with design trends while maintaining a unique perspective?"
-          ]
-        }
+      title: "UX/UI Designer",
+      company: "DesignWorks",
+      logo: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=100&h=100&auto=format&fit=crop",
+      location: "Remote",
+      type: "Contract",
+      salary: "$80 - $100/hour",
+      posted: "1 week ago",
+      saved: false,
+      description: "Create intuitive user interfaces and experiences for our mobile applications. This is a 6-month contract with possibility of extension.",
+      requirements: [
+        "Portfolio demonstrating UI/UX work",
+        "Experience with Figma and Adobe Creative Suite",
+        "Knowledge of design systems"
       ]
     },
     {
       id: 4,
-      name: "Analytics Insights Group",
-      logo: "AI",
-      rating: 4.2,
-      reviews: 643,
-      industry: "Data & Analytics",
-      size: "201-500 employees",
-      type: "Private Company",
-      founded: 2012,
-      headquarters: "Boston, MA",
-      website: "analyticsinsights.com",
-      overview: "Analytics Insights Group helps organizations transform their data into actionable business intelligence through advanced analytics and AI solutions. The company specializes in data strategy, predictive analytics, and building custom data platforms that drive business growth and operational efficiency.",
-      mission: "To empower organizations to make confident, data-driven decisions through accessible analytics and machine learning solutions.",
-      specialties: ["Data Science", "Business Intelligence", "Machine Learning", "Statistical Analysis", "Predictive Modeling", "Data Engineering", "Visualization", "AI Strategy"],
-      featuredReviews: [
-        {
-          id: 401,
-          title: "Exciting work with cutting-edge tech",
-          rating: 4,
-          position: "Data Scientist",
-          employment: "Current Employee - 2 years",
-          location: "Boston, MA",
-          date: "March 3, 2025",
-          pros: "Working with cutting-edge technologies and methodologies. Challenging problems to solve and good technical leadership. The company invests in new tools and technologies, allowing teams to experiment with innovative approaches. Regular knowledge sharing sessions keep everyone updated on advances in the field. Collaborative environment with accessible leadership.",
-          cons: "Communication between technical and business teams could be improved. Sometimes project requirements change frequently. Client expectations about AI capabilities can be unrealistic and difficult to manage. Some projects have aggressive timelines that can create pressure.",
-          helpfulCount: 59
-        },
-        {
-          id: 402,
-          title: "Great learning experience but demanding",
-          rating: 4,
-          position: "BI Analyst",
-          employment: "Former Employee - 2 years",
-          location: "Chicago, IL",
-          date: "February 25, 2025",
-          pros: "Excellent training opportunities and exposure to diverse industries. Strong technical team with lots to learn from. Projects are challenging and provide good career development. The company provides access to courses and certifications. Good compensation package with performance bonuses.",
-          cons: "Client-facing roles can be demanding with tough deadlines and high expectations. Some teams are understaffed. Work-life balance can suffer during critical project phases. Internal processes could be more streamlined. Limited options for remote work compared to competitors.",
-          helpfulCount: 38
-        },
-        {
-          id: 403,
-          title: "Innovative company that values expertise",
-          rating: 5,
-          position: "Machine Learning Engineer",
-          employment: "Current Employee - 1 year",
-          location: "Remote",
-          date: "April 10, 2025",
-          pros: "Truly values technical expertise and innovation. Remote-friendly culture with effective collaboration tools. Interesting problems to solve across multiple industries. Clear career progression paths for technical roles. Leadership communicates company direction and strategy effectively.",
-          cons: "Project staffing can sometimes lead to overspecialization. Some legacy clients use outdated technology stacks that can be frustrating to work with. Benefits package could be more competitive. Company is growing quickly which creates occasional organizational challenges.",
-          helpfulCount: 45
-        },
-        {
-          id: 404,
-          title: "Good stepping stone for career advancement",
-          rating: 4,
-          position: "Data Engineer",
-          employment: "Former Employee - 3 years",
-          location: "Boston, MA",
-          date: "January 5, 2025",
-          pros: "Exposure to various industries and data architectures. Strong emphasis on best practices and data quality. Good technical mentorship from senior team members. Projects provide valuable experience that translates well to career advancement. Company name is well-respected in the industry.",
-          cons: "Project timelines can be aggressive, leading to occasional crunch periods. Compensation is good but not top-of-market. Some teams experience high turnover. Training for new technologies could be more structured and comprehensive. Internal tools sometimes lag behind industry standards.",
-          helpfulCount: 32
-        }
-      ],
-      ratings: {
-        overall: 4.2,
-        workLifeBalance: 3.8,
-        compensation: 4.3,
-        jobSecurity: 4.0,
-        management: 4.2,
-        culture: 4.4
-      },
-      benefits: [
-        { name: "Health Insurance", rating: 4.5 },
-        { name: "Vacation & Time Off", rating: 3.9 },
-        { name: "Retirement Benefits", rating: 4.2 },
-        { name: "Parental Leave", rating: 3.8 },
-        { name: "Learning & Development", rating: 4.7 }
-      ],
-      interviews: [
-        {
-          position: "Data Scientist",
-          experience: "Neutral",
-          difficulty: "Difficult",
-          offers: "Yes",
-          process: "Technical assessment, coding challenge, two rounds of technical interviews, and final interview with leadership.",
-          questions: [
-            "How would you build a recommendation engine for an e-commerce website?",
-            "Coding exercise involving data cleaning and machine learning implementation.",
-            "Describe a challenging data analysis project you've worked on and how you solved it."
-          ]
-        },
-        {
-          position: "Analytics Consultant",
-          experience: "Positive",
-          difficulty: "Average",
-          offers: "Yes",
-          process: "Case study, presentation on past analytics work, panel interview with consulting team.",
-          questions: [
-            "How would you explain complex analytics concepts to non-technical stakeholders?",
-            "Describe how you would approach a data strategy project for a client.",
-            "How do you validate results and ensure data quality?"
-          ]
-        }
+      title: "DevOps Engineer",
+      company: "CloudTech Solutions",
+      logo: "https://images.unsplash.com/photo-1529612700005-e35377bf1415?w=100&h=100&auto=format&fit=crop",
+      location: "Boston, MA",
+      type: "Full-time",
+      salary: "$130,000 - $160,000",
+      posted: "1 day ago",
+      saved: false,
+      description: "Join our infrastructure team to design, implement and maintain our cloud-based systems with a focus on automation and scalability.",
+      requirements: [
+        "Experience with Kubernetes and Docker",
+        "Knowledge of CI/CD pipelines",
+        "Strong scripting skills"
       ]
     },
     {
       id: 5,
-      name: "GreenTech Innovations",
-      logo: "GT",
-      rating: 4.6,
-      reviews: 526,
-      industry: "Environmental Technology",
-      size: "501-1,000 employees",
-      type: "Private Company",
-      founded: 2014,
-      headquarters: "Portland, OR",
-      website: "greentechinnovations.com",
-      overview: "GreenTech Innovations develops sustainable technology solutions for businesses and consumers. Their products range from energy-efficient smart home systems to industrial-scale renewable energy solutions. The company is committed to environmental stewardship while delivering cutting-edge technology.",
-      mission: "To accelerate the transition to sustainable living through innovative technology that reduces environmental impact.",
-      specialties: ["Renewable Energy", "Smart Home Technology", "Energy Efficiency", "Environmental Monitoring", "Sustainable Design", "IoT Solutions", "Carbon Footprint Reduction"],
-      featuredReviews: [
-        {
-          id: 501,
-          title: "Mission-driven company with real impact",
-          rating: 5,
-          position: "Product Manager",
-          employment: "Current Employee - 2 years",
-          location: "Portland, OR",
-          date: "April 25, 2025",
-          pros: "Working on products that have a positive environmental impact. Strong company mission that aligns with personal values. Collaborative culture that encourages innovation. Good work-life balance with flexible schedules. Leadership is transparent about company direction and challenges.",
-          cons: "Growth has led to some organizational challenges. Some projects face funding constraints due to venture capital expectations. Decision-making can sometimes be slow when multiple stakeholders are involved.",
-          helpfulCount: 73
-        },
-        {
-          id: 502,
-          title: "Great culture but growing pains",
-          rating: 4,
-          position: "Software Engineer",
-          employment: "Current Employee - 1 year",
-          location: "Remote",
-          date: "March 12, 2025",
-          pros: "Meaningful work with environmental impact. Strong engineering practices and modern tech stack. Supportive team environment with good collaboration. Remote-friendly policies with effective tools for distributed work.",
-          cons: "Rapid growth has created some process inefficiencies. Documentation sometimes lags behind development. Compensation is good but not competitive with pure tech companies. Some teams are understaffed which creates occasional workload challenges.",
-          helpfulCount: 48
-        }
-      ],
-      ratings: {
-        overall: 4.6,
-        workLifeBalance: 4.4,
-        compensation: 4.2,
-        jobSecurity: 4.3,
-        management: 4.5,
-        culture: 4.8
-      },
-      benefits: [
-        { name: "Health Insurance", rating: 4.5 },
-        { name: "Vacation & Time Off", rating: 4.7 },
-        { name: "Retirement Benefits", rating: 4.0 },
-        { name: "Parental Leave", rating: 4.6 },
-        { name: "Learning & Development", rating: 4.3 }
-      ],
-      interviews: [
-        {
-          position: "Environmental Engineer",
-          experience: "Positive",
-          difficulty: "Average",
-          offers: "Yes",
-          process: "Technical assessment, two rounds of interviews with team and leadership.",
-          questions: [
-            "How would you approach optimizing energy efficiency in a commercial building?",
-            "Describe a project where you implemented sustainable solutions.",
-            "Technical questions about specific environmental regulations and standards."
-          ]
-        }
+      title: "Data Scientist",
+      company: "Analytics Innovations",
+      logo: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=100&h=100&auto=format&fit=crop",
+      location: "Remote",
+      type: "Full-time",
+      salary: "$125,000 - $155,000",
+      posted: "4 days ago",
+      saved: true,
+      description: "Develop machine learning models to extract insights from our data and improve product recommendations for our e-commerce platform.",
+      requirements: [
+        "MS or PhD in Computer Science or related field",
+        "Experience with machine learning frameworks",
+        "Knowledge of Python and R"
       ]
     }
   ];
 
-  // Salary data
-  const industryData = [
-    { name: 'Technology', salary: 120000 },
-    { name: 'Healthcare', salary: 95000 },
-    { name: 'Finance', salary: 110000 },
-    { name: 'Education', salary: 65000 },
-    { name: 'Retail', salary: 58000 },
-    { name: 'Manufacturing', salary: 72000 },
-    { name: 'Consulting', salary: 98000 },
-    { name: 'Media', salary: 85000 },
-    { name: 'Environmental', salary: 88000 },
-    { name: 'Telecommunications', salary: 97000 },
-    { name: 'Pharmaceuticals', salary: 118000 },
-    { name: 'Automotive', salary: 79000 },
+  const applications = [
+    {
+      id: 1,
+      title: "Frontend Developer",
+      company: "WebTech Solutions",
+      logo: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=100&h=100&auto=format&fit=crop",
+      status: "Applied",
+      date: "Applied on May 5, 2025",
+      nextStep: "Waiting for review"
+    },
+    {
+      id: 2,
+      title: "DevOps Engineer",
+      company: "CloudNative Inc.",
+      logo: "https://images.unsplash.com/photo-1529612700005-e35377bf1415?w=100&h=100&auto=format&fit=crop",
+      status: "Interviewing",
+      date: "Applied on April 28, 2025",
+      nextStep: "Technical interview on May 10"
+    },
+    {
+      id: 3,
+      title: "Data Analyst",
+      company: "DataViz Corporation",
+      logo: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=100&h=100&auto=format&fit=crop",
+      status: "Applied",
+      date: "Applied on May 7, 2025",
+      nextStep: "Initial screening"
+    }
   ];
 
-  const roleData = [
-    { name: 'Software Engineer', salary: 125000 },
-    { name: 'Product Manager', salary: 135000 },
-    { name: 'Data Scientist', salary: 130000 },
-    { name: 'UX Designer', salary: 110000 },
-    { name: 'Marketing Manager', salary: 95000 },
-    { name: 'Sales Director', salary: 145000 },
-    { name: 'HR Specialist', salary: 82000 },
-    { name: 'Financial Analyst', salary: 105000 },
-    { name: 'DevOps Engineer', salary: 128000 },
-    { name: 'Business Analyst', salary: 92000 },
-    { name: 'Project Manager', salary: 115000 },
-    { name: 'Systems Administrator', salary:
+  const savedJobs = jobListings.filter(job => job.saved);
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      {/* Left sidebar - Search and filters */}
+      <div className="lg:col-span-1 space-y-4">
+        <Card className="linkedin-card p-4 dark:bg-zinc-900 dark:border-zinc-800">
+          <div className="space-y-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+              <Input 
+                placeholder="Search job titles" 
+                className="pl-9 dark:bg-zinc-800 dark:border-zinc-700" 
+              />
+            </div>
+            
+            <div className="relative">
+              <MapPin className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+              <Input 
+                placeholder="Location" 
+                className="pl-9 dark:bg-zinc-800 dark:border-zinc-700" 
+              />
+            </div>
+            
+            <div className="flex items-center border-t border-gray-200 dark:border-zinc-700 pt-4">
+              <Filter className="h-4 w-4 text-linkedin-blue dark:text-blue-400 mr-2" />
+              <h3 className="font-medium text-sm dark:text-white">Filters</h3>
+            </div>
+            
+            <div className="space-y-3">
+              <div className="space-y-1">
+                <label className="text-sm font-medium dark:text-gray-300">Job Type</label>
+                <Select>
+                  <SelectTrigger className="dark:bg-zinc-800 dark:border-zinc-700">
+                    <SelectValue placeholder="Select job type" />
+                  </SelectTrigger>
+                  <SelectContent className="dark:bg-zinc-900 dark:border-zinc-700">
+                    <SelectItem value="full-time">Full-time</SelectItem>
+                    <SelectItem value="part-time">Part-time</SelectItem>
+                    <SelectItem value="contract">Contract</SelectItem>
+                    <SelectItem value="internship">Internship</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <div className="space-y-1">
+                <label className="text-sm font-medium dark:text-gray-300">Experience Level</label>
+                <Select>
+                  <SelectTrigger className="dark:bg-zinc-800 dark:border-zinc-700">
+                    <SelectValue placeholder="Select experience level" />
+                  </SelectTrigger>
+                  <SelectContent className="dark:bg-zinc-900 dark:border-zinc-700">
+                    <SelectItem value="entry">Entry Level</SelectItem>
+                    <SelectItem value="mid">Mid-Level</SelectItem>
+                    <SelectItem value="senior">Senior Level</SelectItem>
+                    <SelectItem value="executive">Executive</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <div className="space-y-1">
+                <label className="text-sm font-medium dark:text-gray-300">Date Posted</label>
+                <Select>
+                  <SelectTrigger className="dark:bg-zinc-800 dark:border-zinc-700">
+                    <SelectValue placeholder="Select time range" />
+                  </SelectTrigger>
+                  <SelectContent className="dark:bg-zinc-900 dark:border-zinc-700">
+                    <SelectItem value="24h">Past 24 hours</SelectItem>
+                    <SelectItem value="week">Past week</SelectItem>
+                    <SelectItem value="month">Past month</SelectItem>
+                    <SelectItem value="any">Any time</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <div className="space-y-1">
+                <label className="text-sm font-medium dark:text-gray-300">Salary Range</label>
+                <Select>
+                  <SelectTrigger className="dark:bg-zinc-800 dark:border-zinc-700">
+                    <SelectValue placeholder="Select salary range" />
+                  </SelectTrigger>
+                  <SelectContent className="dark:bg-zinc-900 dark:border-zinc-700">
+                    <SelectItem value="50k">$50,000+</SelectItem>
+                    <SelectItem value="75k">$75,000+</SelectItem>
+                    <SelectItem value="100k">$100,000+</SelectItem>
+                    <SelectItem value="150k">$150,000+</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <div className="space-y-1">
+                <label className="text-sm font-medium dark:text-gray-300">Industry</label>
+                <Select>
+                  <SelectTrigger className="dark:bg-zinc-800 dark:border-zinc-700">
+                    <SelectValue placeholder="Select industry" />
+                  </SelectTrigger>
+                  <SelectContent className="dark:bg-zinc-900 dark:border-zinc-700">
+                    <SelectItem value="tech">Technology</SelectItem>
+                    <SelectItem value="finance">Finance</SelectItem>
+                    <SelectItem value="healthcare">Healthcare</SelectItem>
+                    <SelectItem value="retail">Retail</SelectItem>
+                    <SelectItem value="education">Education</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <div className="space-y-1">
+                <label className="text-sm font-medium dark:text-gray-300">Remote Options</label>
+                <Select>
+                  <SelectTrigger className="dark:bg-zinc-800 dark:border-zinc-700">
+                    <SelectValue placeholder="Select remote option" />
+                  </SelectTrigger>
+                  <SelectContent className="dark:bg-zinc-900 dark:border-zinc-700">
+                    <SelectItem value="remote">Remote only</SelectItem>
+                    <SelectItem value="hybrid">Hybrid</SelectItem>
+                    <SelectItem value="onsite">On-site</SelectItem>
+                    <SelectItem value="any">Any workplace type</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <Button className="w-full linkedin-button dark:bg-blue-600 dark:hover:bg-blue-700">
+                Apply Filters
+              </Button>
+            </div>
+          </div>
+        </Card>
+      </div>
+      
+      {/* Main content - Job listings and applications */}
+      <div className="lg:col-span-2">
+        <Card className="linkedin-card mb-4 dark:bg-zinc-900 dark:border-zinc-800">
+          <Tabs defaultValue="listings">
+            <div className="border-b dark:border-zinc-700">
+              <TabsList className="px-4 pt-2">
+                <TabsTrigger value="listings" className="flex items-center gap-1 dark:data-[state=active]:text-white">
+                  <Briefcase className="h-4 w-4" />
+                  <span>Job Listings</span>
+                </TabsTrigger>
+                <TabsTrigger value="applications" className="flex items-center gap-1 dark:data-[state=active]:text-white">
+                  <ListTodo className="h-4 w-4" />
+                  <span>My Applications</span>
+                </TabsTrigger>
+                <TabsTrigger value="saved" className="flex items-center gap-1 dark:data-[state=active]:text-white">
+                  <Save className="h-4 w-4" />
+                  <span>Saved</span>
+                </TabsTrigger>
+              </TabsList>
+            </div>
+            
+            <TabsContent value="listings">
+              <div className="p-4 border-b dark:border-zinc-700">
+                <div className="flex items-center justify-between">
+                  <h2 className="font-semibold dark:text-white">Recommended for you</h2>
+                  <Select defaultValue={activeFilter}>
+                    <SelectTrigger className="w-[180px] dark:bg-zinc-800 dark:border-zinc-700">
+                      <SelectValue placeholder="Sort by" />
+                    </SelectTrigger>
+                    <SelectContent className="dark:bg-zinc-900 dark:border-zinc-700">
+                      <SelectItem value="relevant">Most Relevant</SelectItem>
+                      <SelectItem value="recent">Most Recent</SelectItem>
+                      <SelectItem value="salary-high">Salary (High to Low)</SelectItem>
+                      <SelectItem value="salary-low">Salary (Low to High)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              
+              <div className="divide-y dark:divide-zinc-700">
+                {jobListings.map(job => (
+                  <div key={job.id} className="p-4 hover:bg-gray-50 dark:hover:bg-zinc-800">
+                    <div className="flex">
+                      <div className="w-14 h-14 rounded overflow-hidden flex-shrink-0">
+                        <img 
+                          src={job.logo} 
+                          alt={job.company} 
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="ml-4 flex-grow">
+                        <div className="flex justify-between">
+                          <h3 className="font-semibold text-linkedin-blue dark:text-blue-400 hover:underline cursor-pointer">
+                            {job.title}
+                          </h3>
+                          <Button 
+                            variant="ghost" 
+                            size="icon"
+                            className={job.saved ? "text-linkedin-blue dark:text-blue-400" : "text-gray-500 dark:text-gray-400"}
+                          >
+                            <Save className="h-5 w-5" />
+                          </Button>
+                        </div>
+                        <p className="text-sm font-medium dark:text-gray-300">{job.company}</p>
+                        <div className="flex items-center text-sm text-gray-600 dark:text-gray-400 mt-1">
+                          <MapPin className="h-4 w-4 mr-1" />
+                          <span>{job.location}</span>
+                        </div>
+                        <div className="mt-2 flex flex-wrap gap-2">
+                          <div className="flex items-center text-xs text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-zinc-700 px-2 py-1 rounded">
+                            <Briefcase className="h-3 w-3 mr-1" />
+                            <span>{job.type}</span>
+                          </div>
+                          <div className="flex items-center text-xs text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-zinc-700 px-2 py-1 rounded">
+                            <Clock className="h-3 w-3 mr-1" />
+                            <span>{job.posted}</span>
+                          </div>
+                          {job.salary && (
+                            <div className="text-xs text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-zinc-700 px-2 py-1 rounded">
+                              {job.salary}
+                            </div>
+                          )}
+                        </div>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-2 line-clamp-2">
+                          {job.description}
+                        </p>
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          {job.requirements.map((req, idx) => (
+                            <span 
+                              key={idx} 
+                              className="text-xs px-2 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 rounded-full"
+                            >
+                              {req}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                
+                <div className="p-4 text-center">
+                  <Button variant="outline" className="dark:border-zinc-700 dark:text-gray-300">
+                    Load More Jobs
+                  </Button>
+                </div>
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="applications">
+              {applications.length > 0 ? (
+                <div className="divide-y dark:divide-zinc-700">
+                  {applications.map(application => (
+                    <div key={application.id} className="p-4">
+                      <div className="flex">
+                        <div className="w-14 h-14 rounded overflow-hidden flex-shrink-0">
+                          <img 
+                            src={application.logo} 
+                            alt={application.company} 
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div className="ml-4 flex-grow">
+                          <h3 className="font-semibold dark:text-white">{application.title}</h3>
+                          <p className="text-sm dark:text-gray-300">{application.company}</p>
+                          
+                          <div className="mt-2 flex items-center">
+                            <div className={`px-2 py-1 rounded text-xs font-medium ${
+                              application.status === 'Applied' 
+                                ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300' 
+                                : 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300'
+                            }`}>
+                              {application.status}
+                            </div>
+                          </div>
+                          
+                          <div className="mt-2 text-xs text-gray-600 dark:text-gray-400">
+                            <div className="flex items-center">
+                              <Calendar className="h-3 w-3 mr-1" />
+                              <span>{application.date}</span>
+                            </div>
+                            <div className="flex items-center mt-1">
+                              <CheckCircle2 className="h-3 w-3 mr-1" />
+                              <span>{application.nextStep}</span>
+                            </div>
+                          </div>
+                          
+                          <div className="mt-3">
+                            <Button size="sm" className="linkedin-button dark:bg-blue-600 dark:hover:bg-blue-700 mr-2">
+                              Track Application
+                            </Button>
+                            <Button size="sm" variant="outline" className="dark:border-zinc-700 dark:text-gray-300">
+                              View Job
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="p-8 text-center">
+                  <p className="text-gray-600 dark:text-gray-400 mb-4">You haven't applied to any jobs yet</p>
+                  <Button className="linkedin-button dark:bg-blue-600 dark:hover:bg-blue-700">
+                    Browse Jobs
+                  </Button>
+                </div>
+              )}
+            </TabsContent>
+            
+            <TabsContent value="saved">
+              {savedJobs.length > 0 ? (
+                <div className="divide-y dark:divide-zinc-700">
+                  {savedJobs.map(job => (
+                    <div key={job.id} className="p-4 hover:bg-gray-50 dark:hover:bg-zinc-800">
+                      <div className="flex">
+                        <div className="w-14 h-14 rounded overflow-hidden flex-shrink-0">
+                          <img 
+                            src={job.logo} 
+                            alt={job.company} 
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div className="ml-4 flex-grow">
+                          <div className="flex justify-between">
+                            <h3 className="font-semibold text-linkedin-blue dark:text-blue-400 hover:underline cursor-pointer">
+                              {job.title}
+                            </h3>
+                            <Button 
+                              variant="ghost" 
+                              size="icon"
+                              className="text-linkedin-blue dark:text-blue-400"
+                            >
+                              <Save className="h-5 w-5" />
+                            </Button>
+                          </div>
+                          <p className="text-sm font-medium dark:text-gray-300">{job.company}</p>
+                          <div className="flex items-center text-sm text-gray-600 dark:text-gray-400 mt-1">
+                            <MapPin className="h-4 w-4 mr-1" />
+                            <span>{job.location}</span>
+                          </div>
+                          <div className="mt-2 flex flex-wrap gap-2">
+                            <div className="flex items-center text-xs text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-zinc-700 px-2 py-1 rounded">
+                              <Briefcase className="h-3 w-3 mr-1" />
+                              <span>{job.type}</span>
+                            </div>
+                            <div className="flex items-center text-xs text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-zinc-700 px-2 py-1 rounded">
+                              <Clock className="h-3 w-3 mr-1" />
+                              <span>{job.posted}</span>
+                            </div>
+                            {job.salary && (
+                              <div className="text-xs text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-zinc-700 px-2 py-1 rounded">
+                                {job.salary}
+                              </div>
+                            )}
+                          </div>
+                          <div className="mt-4 flex space-x-2">
+                            <Button className="linkedin-button dark:bg-blue-600 dark:hover:bg-blue-700">Apply</Button>
+                            <Button variant="outline" className="dark:border-zinc-700 dark:text-gray-300">View Details</Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="p-8 text-center">
+                  <p className="text-gray-600 dark:text-gray-400 mb-4">No saved jobs yet</p>
+                  <Button className="linkedin-button dark:bg-blue-600 dark:hover:bg-blue-700">
+                    Browse Jobs
+                  </Button>
+                </div>
+              )}
+            </TabsContent>
+          </Tabs>
+        </Card>
+      </div>
+    </div>
+  );
+};
+
+const Salaries = () => {
+  const [searchRole, setSearchRole] = useState('');
+  const [searchLocation, setSearchLocation] = useState('');
+  
+  // Sample salary data for visualization
+  const salaryData = [
+    { level: 'Junior', salary: 70000 },
+    { level: 'Mid-level', salary: 95000 },
+    { level: 'Senior', salary: 130000 },
+    { level: 'Lead', salary: 155000 },
+    { level: 'Principal', salary: 180000 },
+  ];
+  
+  // Sample distribution data
+  const distributionData = [
+    { range: '$50k-70k', count: 15 },
+    { range: '$70k-90k', count: 25 },
+    { range: '$90k-110k', count: 35 },
+    { range: '$110k-130k', count: 20 },
+    { range: '$130k-150k', count: 12 },
+    { range: '$150k+', count: 8 },
+  ];
+  
+  // Sample trending roles data
+  const trendingRoles = [
+    { role: 'Machine Learning Engineer', growth: '+24%', salary: '$135,000' },
+    { role: 'Data Scientist', growth: '+18%', salary: '$125,000' },
+    { role: 'Cloud Architect', growth: '+15%', salary: '$145,000' },
+    { role: 'DevOps Engineer', growth: '+12%', salary: '$115,000' },
+    { role: 'Full Stack Developer', growth: '+10%', salary: '$105,000' },
+  ];
+  
+  // Sample location comparison data
+  const locationData = [
+    { city: 'San Francisco', salary: 155000 },
+    { city: 'New York', salary: 140000 },
+    { city: 'Seattle', salary: 135000 },
+    { city: 'Austin', salary: 115000 },
+    { city: 'Chicago', salary: 105000 },
+  ];
+  
+  return (
+    <div>
+      <Card className="linkedin-card p-6 mb-6 dark:bg-zinc-900 dark:border-zinc-800">
+        <h2 className="text-lg font-semibold mb-4 dark:text-white">Search Salary Information</h2>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div className="relative">
+            <Search className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+            <Input 
+              placeholder="Job title or role" 
+              className="pl-9 dark:bg-zinc-800 dark:border-zinc-700" 
+              value={searchRole}
+              onChange={(e) => setSearchRole(e.target.value)}
+            />
+          </div>
+          <div className="relative">
+            <MapPin className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+            <Input 
+              placeholder="Location" 
+              className="pl-9 dark:bg-zinc-800 dark:border-zinc-700" 
+              value={searchLocation}
+              onChange={(e) => setSearchLocation(e.target.value)}
+            />
+          </div>
+        </div>
+        
+        <Button className="linkedin-button dark:bg-blue-600 dark:hover:bg-blue-700">Search Salaries</Button>
+      </Card>
+      
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2">
+          <Card className="linkedin-card mb-6 dark:bg-zinc-900 dark:border-zinc-800">
+            <div className="p-4 border-b dark:border-zinc-700">
+              <h3 className="font-semibold dark:text-white">Software Engineer Salary by Experience</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Average base salary in United States</p>
+            </div>
+            
+            <div className="p-4">
+              <div className="h-72">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    data={salaryData}
+                    margin={{
+                      top: 5,
+                      right: 30,
+                      left: 20,
+                      bottom: 5,
+                    }}
+                    className="dark:text-gray-300"
+                  >
+                    <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                    <XAxis dataKey="level" stroke="#9CA3AF" />
+                    <YAxis 
+                      tickFormatter={(value) => `$${value/1000}k`}
+                      domain={[0, 200000]}
+                      stroke="#9CA3AF"
+                    />
+                    <Tooltip 
+                      formatter={(value) => [`$${value.toLocaleString()}`, 'Salary']}
+                      contentStyle={{ backgroundColor: '#1F2937', border: 'none', color: '#E5E7EB' }}
+                    />
+                    <Legend />
+                    <Bar dataKey="salary" name="Annual Salary" fill="#0077B5" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+          </Card>
+          
+          <Card className="linkedin-card mb-6 dark:bg-zinc-900 dark:border-zinc-800">
+            <div className="p-4 border-b dark:border-zinc-700">
+              <h3 className="font-semibold dark:text-white">Salary Distribution</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Software Engineer salary range distribution</p>
+            </div>
+            
+            <div className="p-4">
+              <div className="h-72">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    data={distributionData}
+                    margin={{
+                      top: 5,
+                      right: 30,
+                      left: 20,
+                      bottom: 5,
+                    }}
+                    className="dark:text-gray-300"
+                  >
+                    <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                    <XAxis dataKey="range" stroke="#9CA3AF" />
+                    <YAxis stroke="#9CA3AF" />
+                    <Tooltip 
+                      contentStyle={{ backgroundColor: '#1F2937', border: 'none', color: '#E5E7EB' }}
+                    />
+                    <Legend />
+                    <Bar dataKey="count" name="Number of Positions" fill="#0A66C2" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+          </Card>
+          
+          <Card className="linkedin-card dark:bg-zinc-900 dark:border-zinc-800">
+            <div className="p-4 border-b dark:border-zinc-700">
+              <h3 className="font-semibold dark:text-white">Top Paying Companies</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">For Software Engineers</p>
+            </div>
+            
+            <div className="p-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="border dark:border-zinc-700 rounded-lg p-4 dark:bg-zinc-800">
+                  <div className="flex items-center mb-3">
+                    <div className="w-10 h-10 rounded bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mr-3">
+                      <Building className="h-6 w-6 text-linkedin-blue dark:text-blue-400" />
+                    </div>
+                    <div>
+                      <h4 className="font-medium dark:text-white">TechGiant Inc.</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Tech Industry</p>
+                    </div>
+                  </div>
+                  <div className="text-sm">
+                    <div className="flex justify-between py-1">
+                      <span className="dark:text-gray-300">Average Salary:</span>
+                      <span className="font-semibold dark:text-white">$165,000</span>
+                    </div>
+                    <div className="flex justify-between py-1">
+                      <span className="dark:text-gray-300">Salary Range:</span>
+                      <span className="dark:text-gray-300">$130k - $200k</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="border dark:border-zinc-700 rounded-lg p-4 dark:bg-zinc-800">
+                  <div className="flex items-center mb-3">
+                    <div className="w-10 h-10 rounded bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mr-3">
+                      <Building className="h-6 w-6 text-linkedin-blue dark:text-blue-400" />
+                    </div>
+                    <div>
+                      <h4 className="font-medium dark:text-white">InnovateX</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Tech Industry</p>
+                    </div>
+                  </div>
+                  <div className="text-sm">
+                    <div className="flex justify-between py-1">
+                      <span className="dark:text-gray-300">Average Salary:</span>
+                      <span className="font-semibold dark:text-white">$158,000</span>
+                    </div>
+                    <div className="flex justify-between py-1">
+                      <span className="dark:text-gray-300">Salary Range:</span>
+                      <span className="dark:text-gray-300">$125k - $190k</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="border dark:border-zinc-700 rounded-lg p-4 dark:bg-zinc-800">
+                  <div className="flex items-center mb-3">
+                    <div className="w-10 h-10 rounded bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mr-3">
+                      <Building className="h-6 w-6 text-linkedin-blue dark:text-blue-400" />
+                    </div>
+                    <div>
+                      <h4 className="font-medium dark:text-white">FutureSoft</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Tech Industry</p>
+                    </div>
+                  </div>
+                  <div className="text-sm">
+                    <div className="flex justify-between py-1">
+                      <span className="dark:text-gray-300">Average Salary:</span>
+                      <span className="font-semibold dark:text-white">$152,000</span>
+                    </div>
+                    <div className="flex justify-between py-1">
+                      <span className="dark:text-gray-300">Salary Range:</span>
+                      <span className="dark:text-gray-300">$120k - $185k</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="border dark:border-zinc-700 rounded-lg p-4 dark:bg-zinc-800">
+                  <div className="flex items-center mb-3">
+                    <div className="w-10 h-10 rounded bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mr-3">
+                      <Building className="h-6 w-6 text-linkedin-blue dark:text-blue-400" />
+                    </div>
+                    <div>
+                      <h4 className="font-medium dark:text-white">DataFlow Inc.</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Tech Industry</p>
+                    </div>
+                  </div>
+                  <div className="text-sm">
+                    <div className="flex justify-between py-1">
+                      <span className="dark:text-gray-300">Average Salary:</span>
+                      <span className="font-semibold dark:text-white">$148,000</span>
+                    </div>
+                    <div className="flex justify-between py-1">
+                      <span className="dark:text-gray-300">Salary Range:</span>
+                      <span className="dark:text-gray-300">$118k - $178k</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Card>
+        </div>
+        
+        <div className="space-y-6">
+          <Card className="linkedin-card dark:bg-zinc-900 dark:border-zinc-800">
+            <div className="p-4 border-b dark:border-zinc-700">
+              <div className="flex items-center">
+                <TrendingUp className="h-5 w-5 text-linkedin-blue dark:text-blue-400 mr-2" />
+                <h3 className="font-semibold dark:text-white">Fastest Growing Roles</h3>
+              </div>
+            </div>
+            
+            <div className="p-4">
+              <ul className="divide-y dark:divide-zinc-700">
+                {trendingRoles.map((role, index) => (
+                  <li key={index} className="py-3">
+                    <div className="flex justify-between">
+                      <p className="font-medium dark:text-white">{role.role}</p>
+                      <span className="text-green-600 dark:text-green-400 font-medium">{role.growth}</span>
+                    </div>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">Avg salary: {role.salary}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Card>
+          
+          <Card className="linkedin-card dark:bg-zinc-900 dark:border-zinc-800">
+            <div className="p-4 border-b dark:border-zinc-700">
+              <div className="flex items-center">
+                <MapPin className="h-5 w-5 text-linkedin-blue dark:text-blue-400 mr-2" />
+                <h3 className="font-semibold dark:text-white">Salary by Location</h3>
+              </div>
+            </div>
+            
+            <div className="p-4">
+              <div className="h-60">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    layout="vertical"
+                    data={locationData}
+                    margin={{
+                      top: 5,
+                      right: 30,
+                      left: 20,
+                      bottom: 5,
+                    }}
+                    className="dark:text-gray-300"
+                  >
+                    <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                    <XAxis 
+                      type="number" 
+                      tickFormatter={(value) => `$${value/1000}k`}
+                      domain={[0, 200000]}
+                      stroke="#9CA3AF"
+                    />
+                    <YAxis type="category" dataKey="city" stroke="#9CA3AF" />
+                    <Tooltip 
+                      formatter={(value) => [`$${value.toLocaleString()}`, 'Average Salary']}
+                      contentStyle={{ backgroundColor: '#1F2937', border: 'none', color: '#E5E7EB' }}
+                    />
+                    <Legend />
+                    <Bar dataKey="salary" name="Avg Salary" fill="#004471" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+          </Card>
+          
+          <Card className="linkedin-card dark:bg-zinc-900 dark:border-zinc-800">
+            <div className="p-4">
+              <h3 className="font-semibold mb-4 dark:text-white">Benefits Analysis</h3>
+              
+              <div className="space-y-4">
+                <div>
+                  <div className="flex justify-between mb-1">
+                    <span className="text-sm dark:text-gray-300">Health Insurance</span>
+                    <span className="text-sm font-medium dark:text-white">92%</span>
+                  </div>
+                  <div className="w-full bg-gray-200 dark:bg-zinc-700 rounded-full h-2">
+                    <div className="bg-linkedin-blue dark:bg-blue-500 rounded-full h-2" style={{ width: "92%" }}></div>
+                  </div>
+                </div>
+                
+                <div>
+                  <div className="flex justify-between mb-1">
+                    <span className="text-sm dark:text-gray-300">401(k) Matching</span>
+                    <span className="text-sm font-medium dark:text-white">78%</span>
+                  </div>
+                  <div className="w-full bg-gray-200 dark:bg-zinc-700 rounded-full h-2">
+                    <div className="bg-linkedin-blue dark:bg-blue-500 rounded-full h-2" style={{ width: "78%" }}></div>
+                  </div>
+                </div>
+                
+                <div>
+                  <div className="flex justify-between mb-1">
+                    <span className="text-sm dark:text-gray-300">Remote Work Options</span>
+                    <span className="text-sm font-medium dark:text-white">85%</span>
+                  </div>
+                  <div className="w-full bg-gray-200 dark:bg-zinc-700 rounded-full h-2">
+                    <div className="bg-linkedin-blue dark:bg-blue-500 rounded-full h-2" style={{ width: "85%" }}></div>
+                  </div>
+                </div>
+                
+                <div>
+                  <div className="flex justify-between mb-1">
+                    <span className="text-sm dark:text-gray-300">Unlimited PTO</span>
+                    <span className="text-sm font-medium dark:text-white">45%</span>
+                  </div>
+                  <div className="w-full bg-gray-200 dark:bg-zinc-700 rounded-full h-2">
+                    <div className="bg-linkedin-blue dark:bg-blue-500 rounded-full h-2" style={{ width: "45%" }}></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Ratings = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  
+  const companies = [
+    {
+      id: 1,
+      name: 'TechInnovate Inc.',
+      logo: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=100&h=100&auto=format&fit=crop',
+      rating: 4.6,
+      reviews: 1243,
+      industry: 'Technology',
+      size: '5,000-10,000',
+      headquarters: 'San Francisco, CA',
+      ceoApproval: 94,
+      featured: true,
+      description: 'A leading technology company focused on software development and cloud solutions.'
+    },
+    {
+      id: 2,
+      name: 'Global Finance Corp',
+      logo: 'https://images.unsplash.com/photo-1549421263-5ec394a5ad4c?w=100&h=100&auto=format&fit=crop',
+      rating: 3.8,
+      reviews: 2156,
+      industry: 'Finance',
+      size: '10,000+',
+      headquarters: 'New York, NY',
+      ceoApproval: 78,
+      featured: false,
+      description: 'One of the world\'s largest financial institutions providing banking and investment services.'
+    },
+    {
+      id: 3,
+      name: 'CreativeWorks Design',
+      logo: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=100&h=100&auto=format&fit=crop',
+      rating: 4.3,
+      reviews: 487,
+      industry: 'Design',
+      size: '1,000-5,000',
+      headquarters: 'Austin, TX',
+      ceoApproval: 89,
+      featured: false,
+      description: 'A creative agency specializing in UX/UI design and brand identity.'
+    },
+    {
+      id: 4,
+      name: 'HealthPlus Systems',
+      logo: 'https://images.unsplash.com/photo-1529612700005-e35377bf1415?w=100&h=100&auto=format&fit=crop',
+      rating: 4.1,
+      reviews: 923,
+      industry: 'Healthcare',
+      size: '5,000-10,000',
+      headquarters: 'Boston, MA',
+      ceoApproval: 86,
+      featured: false,
+      description: 'Revolutionary healthcare technology provider focused on improving patient outcomes.'
+    },
+    {
+      id: 5,
+      name: 'EduTech Solutions',
+      logo: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=100&h=100&auto=format&fit=crop',
+      rating: 4.7,
+      reviews: 542,
+      industry: 'Education Technology',
+      size: '1,000-5,000',
+      headquarters: 'Chicago, IL',
+      ceoApproval: 95,
+      featured: true,
+      description: 'Transforming education through innovative learning platforms and digital solutions.'
+    }
+  ];
+
+  const renderStars = (rating: number) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      if (i <= Math.floor(rating)) {
+        stars.push(<Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />);
+      } else if (i - 0.5 <= rating) {
+        stars.push(<Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />);
+      } else {
+        stars.push(<Star key={i} className="h-4 w-4 text-gray-300 dark:text-gray-600" />);
+      }
+    }
+    return stars;
+  };
+  
+  return (
+    <div>
+      <Card className="linkedin-card p-6 mb-6 dark:bg-zinc-900 dark:border-zinc-800">
+        <div className="flex flex-col md:flex-row gap-4">
+          <div className="relative flex-grow">
+            <Search className="absolute left-3 top-3 h-5 w-5 text-gray-500" />
+            <Input 
+              placeholder="Search for a company" 
+              className="pl-10 h-12 dark:bg-zinc-800 dark:border-zinc-700" 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+          <Button className="linkedin-button h-12 px-8 dark:bg-blue-600 dark:hover:bg-blue-700">Search</Button>
+        </div>
+      </Card>
+      
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="lg:col-span-1 space-y-4">
+          <Card className="linkedin-card p-4 dark:bg-zinc-900 dark:border-zinc-800">
+            <h3 className="font-semibold mb-4 dark:text-white">Filters</h3>
+            
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium dark:text-gray-300">Industry</label>
+                <Select>
+                  <SelectTrigger className="dark:bg-zinc-800 dark:border-zinc-700">
+                    <SelectValue placeholder="All Industries" />
+                  </SelectTrigger>
+                  <SelectContent className="dark:bg-zinc-900 dark:border-zinc-700">
+                    <SelectItem value="tech">Technology</SelectItem>
+                    <SelectItem value="finance">Finance</SelectItem>
+                    <SelectItem value="healthcare">Healthcare</SelectItem>
+                    <SelectItem value="education">Education</SelectItem>
+                    <SelectItem value="retail">Retail</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-sm font-medium dark:text-gray-300">Company Size</label>
+                <Select>
+                  <SelectTrigger className="dark:bg-zinc-800 dark:border-zinc-700">
+                    <SelectValue placeholder="Any Size" />
+                  </SelectTrigger>
+                  <SelectContent className="dark:bg-zinc-900 dark:border-zinc-700">
+                    <SelectItem value="small">1-50 employees</SelectItem>
+                    <SelectItem value="medium">51-500 employees</SelectItem>
+                    <SelectItem value="large">501-1,000 employees</SelectItem>
+                    <SelectItem value="xlarge">1,001-5,000 employees</SelectItem>
+                    <SelectItem value="xxlarge">5,000+ employees</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-sm font-medium dark:text-gray-300">Rating</label>
+                <Select>
+                  <SelectTrigger className="dark:bg-zinc-800 dark:border-zinc-700">
+                    <SelectValue placeholder="Any Rating" />
+                  </SelectTrigger>
+                  <SelectContent className="dark:bg-zinc-900 dark:border-zinc-700">
+                    <SelectItem value="4plus">4+ stars</SelectItem>
+                    <SelectItem value="3plus">3+ stars</SelectItem>
+                    <SelectItem value="2plus">2+ stars</SelectItem>
+                    <SelectItem value="1plus">1+ stars</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-sm font-medium dark:text-gray-300">Location</label>
+                <div className="relative">
+                  <MapPin className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+                  <Input 
+                    placeholder="Any Location" 
+                    className="pl-9 dark:bg-zinc-800 dark:border-zinc-700" 
+                  />
+                </div>
+              </div>
+              
+              <Button className="w-full linkedin-button dark:bg-blue-600 dark:hover:bg-blue-700">Apply Filters</Button>
+            </div>
+          </Card>
+          
+          <Card className="linkedin-card p-4 dark:bg-zinc-900 dark:border-zinc-800">
+            <h3 className="font-semibold mb-3 dark:text-white">Popular Companies</h3>
+            
+            <ul className="space-y-3">
+              <li>
+                <a href="#" className="flex items-center hover:text-linkedin-blue dark:text-gray-300 dark:hover:text-blue-400">
+                  <div className="w-8 h-8 rounded overflow-hidden mr-2">
+                    <img src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=100&h=100&auto=format&fit=crop" alt="Company" className="w-full h-full object-cover" />
+                  </div>
+                  <span className="text-sm">TechCorp Inc.</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" className="flex items-center hover:text-linkedin-blue dark:text-gray-300 dark:hover:text-blue-400">
+                  <div className="w-8 h-8 rounded overflow-hidden mr-2">
+                    <img src="https://images.unsplash.com/photo-1549421263-5ec394a5ad4c?w=100&h=100&auto=format&fit=crop" alt="Company" className="w-full h-full object-cover" />
+                  </div>
+                  <span className="text-sm">Global Finance</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" className="flex items-center hover:text-linkedin-blue dark:text-gray-300 dark:hover:text-blue-400">
+                  <div className="w-8 h-8 rounded overflow-hidden mr-2">
+                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=100&h=100&auto=format&fit=crop" alt="Company" className="w-full h-full object-cover" />
+                  </div>
+                  <span className="text-sm">Innovate Digital</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" className="flex items-center hover:text-linkedin-blue dark:text-gray-300 dark:hover:text-blue-400">
+                  <div className="w-8 h-8 rounded overflow-hidden mr-2">
+                    <img src="https://images.unsplash.com/photo-1529612700005-e35377bf1415?w=100&h=100&auto=format&fit=crop" alt="Company" className="w-full h-full object-cover" />
+                  </div>
+                  <span className="text-sm">HealthCare Plus</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" className="flex items-center hover:text-linkedin-blue dark:text-gray-300 dark:hover:text-blue-400">
+                  <div className="w-8 h-8 rounded overflow-hidden mr-2">
+                    <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=100&h=100&auto=format&fit=crop" alt="Company" className="w-full h-full object-cover" />
+                  </div>
+                  <span className="text-sm">Retail Brands Inc.</span>
+                </a>
+              </li>
+            </ul>
+          </Card>
+        </div>
+        
+        <div className="lg:col-span-3">
+          <div className="mb-4">
+            <h2 className="text-xl font-semibold dark:text-white">Top Rated Companies</h2>
+            <p className="text-gray-600 dark:text-gray-400">Based on employee reviews</p>
+          </div>
+          
+          <div className="space-y-4">
+            {companies.map(company => (
+              <Card key={company.id} className={`linkedin-card p-0 overflow-hidden dark:bg-zinc-900 dark:border-zinc-800 ${company.featured ? 'border-2 border-linkedin-blue dark:border-blue-600' : ''}`}>
+                {company.featured && (
+                  <div className="bg-linkedin-blue dark:bg-blue-700 text-white py-1 px-3 text-xs font-medium">
+                    Featured Company
+                  </div>
+                )}
+                
+                <div className="p-4">
+                  <div className="flex items-start">
+                    <div className="w-16 h-16 rounded overflow-hidden flex-shrink-0">
+                      <img 
+                        src={company.logo} 
+                        alt={company.name} 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    
+                    <div className="ml-4 flex-grow">
+                      <div className="flex flex-wrap justify-between">
+                        <h3 className="font-semibold text-lg dark:text-white">{company.name}</h3>
+                        <div className="flex items-center">
+                          <div className="flex mr-1">
+                            {renderStars(company.rating)}
+                          </div>
+                          <span className="font-medium dark:text-white">{company.rating}</span>
+                        </div>
+                      </div>
+                      
+                      <p className="text-sm text-gray-600 dark:text-gray-400">{company.description}</p>
+                      
+                      <div className="mt-3 flex flex-wrap gap-y-2">
+                        <div className="flex items-center text-xs text-gray-600 dark:text-gray-400 mr-4">
+                          <Building className="h-3 w-3 mr-1" />
+                          <span>{company.industry}</span>
+                        </div>
+                        <div className="flex items-center text-xs text-gray-600 dark:text-gray-400 mr-4">
+                          <Users className="h-3 w-3 mr-1" />
+                          <span>{company.size} employees</span>
+                        </div>
+                        <div className="flex items-center text-xs text-gray-600 dark:text-gray-400 mr-4">
+                          <MapPin className="h-3 w-3 mr-1" />
+                          <span>{company.headquarters}</span>
+                        </div>
+                        <div className="flex items-center text-xs bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300 px-2 py-0.5 rounded-full">
+                          <span>{company.ceoApproval}% CEO Approval</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="border-t dark:border-zinc-700 p-3">
+                  <Tabs defaultValue="overview" className="w-full">
+                    <TabsList className="grid grid-cols-3 md:grid-cols-6 mb-2">
+                      <TabsTrigger value="overview" className="dark:data-[state=active]:text-white">Overview</TabsTrigger>
+                      <TabsTrigger value="reviews" className="dark:data-[state=active]:text-white">Reviews</TabsTrigger>
+                      <TabsTrigger value="salaries" className="dark:data-[state=active]:text-white">Salaries</TabsTrigger>
+                      <TabsTrigger value="interviews" className="dark:data-[state=active]:text-white">Interviews</TabsTrigger>
+                      <TabsTrigger value="benefits" className="dark:data-[state=active]:text-white">Benefits</TabsTrigger>
+                      <TabsTrigger value="photos" className="dark:data-[state=active]:text-white">Photos</TabsTrigger>
+                    </TabsList>
+                    
+                    <TabsContent value="overview" className="pt-2">
+                      <div className="flex flex-wrap gap-4">
+                        <div className="bg-gray-50 dark:bg-zinc-800 p-3 rounded flex-grow">
+                          <h4 className="text-sm font-medium mb-1 dark:text-gray-300">Work-Life Balance</h4>
+                          <div className="flex items-center">
+                            <div className="w-full bg-gray-200 dark:bg-zinc-700 rounded-full h-1.5 mr-2">
+                              <div className="bg-linkedin-blue dark:bg-blue-500 rounded-full h-1.5" style={{ width: `${company.rating/5*100}%` }}></div>
+                            </div>
+                            <span className="text-sm dark:text-gray-300">{company.rating}</span>
+                          </div>
+                        </div>
+                        
+                        <div className="bg-gray-50 dark:bg-zinc-800 p-3 rounded flex-grow">
+                          <h4 className="text-sm font-medium mb-1 dark:text-gray-300">Career Growth</h4>
+                          <div className="flex items-center">
+                            <div className="w-full bg-gray-200 dark:bg-zinc-700 rounded-full h-1.5 mr-2">
+                              <div className="bg-linkedin-blue dark:bg-blue-500 rounded-full h-1.5" style={{ width: `${(company.rating-0.3)/5*100}%` }}></div>
+                            </div>
+                            <span className="text-sm dark:text-gray-300">{(company.rating-0.3).toFixed(1)}</span>
+                          </div>
+                        </div>
+                        
+                        <div className="bg-gray-50 dark:bg-zinc-800 p-3 rounded flex-grow">
+                          <h4 className="text-sm font-medium mb-1 dark:text-gray-300">Compensation</h4>
+                          <div className="flex items-center">
+                            <div className="w-full bg-gray-200 dark:bg-zinc-700 rounded-full h-1.5 mr-2">
+                              <div className="bg-linkedin-blue dark:bg-blue-500 rounded-full h-1.5" style={{ width: `${(company.rating-0.2)/5*100}%` }}></div>
+                            </div>
+                            <span className="text-sm dark:text-gray-300">{(company.rating-0.2).toFixed(1)}</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <Button className="mt-4 linkedin-button dark:bg-blue-600 dark:hover:bg-blue-700">View Full Profile</Button>
+                    </TabsContent>
+                    
+                    <TabsContent value="reviews">
+                      <div className="p-4">
+                        <p className="text-gray-600 dark:text-gray-400">Read {company.reviews} reviews from verified employees</p>
+                        <Button className="mt-3 linkedin-button dark:bg-blue-600 dark:hover:bg-blue-700">Read Reviews</Button>
+                      </div>
+                    </TabsContent>
+                    
+                    <TabsContent value="salaries">
+                      <div className="p-4">
+                        <div className="mb-3">
+                          <h4 className="font-medium dark:text-white">Average Salaries</h4>
+                          <p className="text-sm text-gray-600 dark:text-gray-400">Based on verified employee reports</p>
+                        </div>
+                        <ul className="space-y-2">
+                          <li className="flex justify-between">
+                            <span className="text-sm dark:text-gray-300">Software Engineer</span>
+                            <span className="text-sm font-medium dark:text-white">$125,000</span>
+                          </li>
+                          <li className="flex justify-between">
+                            <span className="text-sm dark:text-gray-300">Product Manager</span>
+                            <span className="text-sm font-medium dark:text-white">$145,000</span>
+                          </li>
+                          <li className="flex justify-between">
+                            <span className="text-sm dark:text-gray-300">Data Scientist</span>
+                            <span className="text-sm font-medium dark:text-white">$135,000</span>
+                          </li>
+                        </ul>
+                        <Button className="mt-3 linkedin-button dark:bg-blue-600 dark:hover:bg-blue-700">View All Salaries</Button>
+                      </div>
+                    </TabsContent>
+                  </Tabs>
+                </div>
+              </Card>
+            ))}
+            
+            <div className="text-center py-4">
+              <Button variant="outline" className="dark:border-zinc-700 dark:text-gray-300">Load More Companies</Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Jobs = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [activeTab, setActiveTab] = useState('jobs');
+  
+  // Handle tab changes
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab);
+    navigate(`/jobs/${tab}`);
+  };
+
+  return (
+    <div className="min-h-screen bg-linkedin-gray dark:bg-zinc-950">
+      <CustomNavbar />
+      
+      <div className="max-w-screen-xl mx-auto px-4 py-6">
+        
+        
+        <Tabs 
+          defaultValue={location.pathname.includes('salaries') ? 'salaries' : location.pathname.includes('ratings') ? 'ratings' : 'jobs'} 
+          onValueChange={handleTabChange}
+        >
+          <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-sm mb-6 p-2">
+            <TabsList className="grid w-full grid-cols-3 h-11">
+              <TabsTrigger value="jobs" className="text-sm dark:data-[state=active]:text-white">Job Listings</TabsTrigger>
+              <TabsTrigger value="salaries" className="text-sm dark:data-[state=active]:text-white">Salary Insights</TabsTrigger>
+              <TabsTrigger value="ratings" className="text-sm dark:data-[state=active]:text-white">Company Ratings</TabsTrigger>
+            </TabsList>
+          </div>
+          
+          <TabsContent value="jobs">
+            <JobListings />
+          </TabsContent>
+          
+          <TabsContent value="salaries">
+            <Salaries />
+          </TabsContent>
+          
+          <TabsContent value="ratings">
+            <Ratings />
+          </TabsContent>
+        </Tabs>
+      </div>
+    </div>
+  );
+};
+
+export default Jobs;

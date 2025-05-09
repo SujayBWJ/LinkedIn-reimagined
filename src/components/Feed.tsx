@@ -23,7 +23,7 @@ const Feed = () => {
   const [reactions, setReactions] = useState({});
   const [repostedPosts, setRepostedPosts] = useState({});
   const [savedPosts, setSavedPosts] = useState({});
-  
+
   // Reaction types and their icons
   const reactionTypes = [
     { type: 'like', icon: ThumbsUp, label: 'Like', color: 'text-blue-500' },
@@ -32,7 +32,7 @@ const Feed = () => {
     { type: 'celebrate', icon: Smile, label: 'Celebrate', color: 'text-green-500' },
     { type: 'angry', icon: Angry, label: 'Angry', color: 'text-red-500' }
   ];
-  
+
   // Mock posts data with real photos
   const posts = [
     {
@@ -149,7 +149,7 @@ const Feed = () => {
       type: "skills"
     }
   ];
-  
+
   const filteredPosts = activeTab === "all" ? posts : posts.filter(post => post.type === activeTab);
 
   const handleReact = (postId, reactionType) => {
@@ -162,15 +162,15 @@ const Feed = () => {
   const getReactionIcon = (postId) => {
     const reaction = reactions[postId];
     if (!reaction) return reactionTypes[0].icon;
-    
+
     const reactionData = reactionTypes.find(r => r.type === reaction);
     return reactionData.icon;
   };
-  
+
   const getReactionColor = (postId) => {
     const reaction = reactions[postId];
     if (!reaction) return '';
-    
+
     const reactionData = reactionTypes.find(r => r.type === reaction);
     return reactionData.color;
   };
@@ -205,42 +205,42 @@ const Feed = () => {
 
   const addComment = (postId) => {
     if (!newComment[postId] || newComment[postId].trim() === '') return;
-    
+
     const updatedComments = comments[postId] ? [...comments[postId]] : [];
     updatedComments.push({
       id: Date.now(),
       author: {
         name: "Zero",
-        avatar: "https://images.unsplash.com/photo-1501286353178-1ec881214838?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80"
+        avatar: "https://avatars.githubusercontent.com/u/124599?v=4"
       },
       content: newComment[postId],
       time: "Just now"
     });
-    
+
     setComments({
       ...comments,
       [postId]: updatedComments
     });
-    
+
     setNewComment({
       ...newComment,
       [postId]: ''
     });
   };
-  
+
   const getPostComments = (postId) => {
     const existingComments = posts.find(post => post.id === postId)?.comments || [];
     const newComments = comments[postId] || [];
     return [...existingComments, ...newComments];
   };
-  
+
   return (
     <div className="w-full max-w-2xl mx-auto space-y-4">
       {/* Create Post */}
       <div className="linkedin-card p-4">
         <div className="flex items-start">
           <Avatar className="h-10 w-10 mr-3">
-            <AvatarImage src="https://images.unsplash.com/photo-1501286353178-1ec881214838?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80" alt="Zero" />
+            <AvatarImage src="https://avatars.githubusercontent.com/u/124599?v=4" alt="Zero" />
             <AvatarFallback>Z</AvatarFallback>
           </Avatar>
           <div className="ml-3 flex-1">
@@ -251,43 +251,78 @@ const Feed = () => {
               value={postContent}
               onChange={(e) => setPostContent(e.target.value)}
             />
-            <div className="flex items-center justify-between mt-3">
-              <div className="flex space-x-2">
-                <button className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
-                  <Image className="h-5 w-5 text-linkedin-blue" />
+            <div className="flex items-center justify-between mt-1">
+              <div className="flex space-x-16"> {/* Increased space between icons */}
+                <button className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200">
+                  <Image className="h-7 w-7 font-bold text-indigo-500" /> {/* Bold and larger icon */}
                 </button>
-                <button className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
-                  <Link2 className="h-5 w-5 text-linkedin-blue" />
+                <button className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200">
+                  <Link2 className="h-7 w-7 font-bold text-teal-500" /> {/* Bold and larger icon */}
                 </button>
-                <button className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
-                  <Calendar className="h-5 w-5 text-linkedin-blue" />
+                <button className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200">
+                  <Calendar className="h-7 w-7 font-bold text-yellow-500" /> {/* Bold and larger icon */}
                 </button>
-                <button className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
-                  <FileText className="h-5 w-5 text-linkedin-blue" />
+                <button className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200">
+                  <FileText className="h-7 w-7 font-bold text-red-500" /> {/* Bold and larger icon */}
                 </button>
               </div>
-              <button 
-                className={`py-1.5 px-3 rounded-full text-sm font-medium ${postContent ? 'bg-linkedin-blue hover:bg-linkedin-darkBlue text-white' : 'bg-gray-200 dark:bg-gray-800 text-gray-500 dark:text-gray-400 cursor-not-allowed'}`}
+              <button
+                className={`py-1.5 px-4 rounded-full text-sm font-medium transition-all duration-200 ${postContent
+                    ? 'bg-linkedin-blue hover:bg-linkedin-darkBlue text-white'
+                    : 'bg-gray-200 dark:bg-gray-800 text-gray-500 dark:text-gray-400 cursor-not-allowed'
+                  }`}
                 disabled={!postContent}
               >
                 Post
               </button>
             </div>
+
           </div>
         </div>
       </div>
-      
+
       {/* Content Filter Tabs */}
+
       <Tabs defaultValue="all" value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="w-full bg-white dark:bg-linkedin-darkGrey border border-gray-200 dark:border-gray-800 rounded-lg">
-          <TabsTrigger value="all" className="flex-1">All</TabsTrigger>
-          <TabsTrigger value="general" className="flex-1">General</TabsTrigger>
-          <TabsTrigger value="technical" className="flex-1">Technical</TabsTrigger>
-          <TabsTrigger value="jobs" className="flex-1">Jobs</TabsTrigger>
-          <TabsTrigger value="skills" className="flex-1">Skills</TabsTrigger>
-        </TabsList>
+        <Tabs defaultValue="all" value={activeTab} onValueChange={setActiveTab}>
+          <TabsList className="w-full bg-white dark:bg-linkedin-darkGrey border border-gray-200 dark:border-gray-800 rounded-lg">
+            <TabsTrigger
+              value="all"
+              className="flex-1 py-2 px-4 text-center rounded-lg transition-all duration-300 ease-in-out transform hover:bg-gray-200 active:bg-gray-200 dark:active:bg-gray-600 text-gray-700 dark:text-gray-300 dark:hover:bg-gray-200"
+            >
+              All
+            </TabsTrigger>
+            <TabsTrigger
+              value="general"
+              className="flex-1 py-2 px-4 text-center rounded-lg transition-all duration-300 ease-in-out transform hover:bg-gray-200 active:bg-gray-200 dark:active:bg-gray-600 text-gray-700 dark:text-gray-300 dark:hover:bg-linkedin-darkBlue"
+            >
+              General
+            </TabsTrigger>
+            <TabsTrigger
+              value="technical"
+              className="flex-1 py-2 px-4 text-center rounded-lg transition-all duration-300 ease-in-out transform hover:bg-gray-200 active:bg-gray-200 dark:active:bg-gray-600 text-gray-700 dark:text-gray-300 dark:hover:bg-linkedin-darkBlue"
+            >
+              Technical
+            </TabsTrigger>
+            <TabsTrigger
+              value="jobs"
+              className="flex-1 py-2 px-4 text-center rounded-lg transition-all duration-300 ease-in-out transform hover:bg-gray-200 active:bg-gray-200 dark:active:bg-gray-600 text-gray-700 dark:text-gray-300 dark:hover:bg-linkedin-darkBlue"
+            >
+              Jobs
+            </TabsTrigger>
+            <TabsTrigger
+              value="skills"
+              className="flex-1 py-2 px-4 text-center rounded-lg transition-all duration-300 ease-in-out transform hover:bg-gray-200 active:bg-gray-200 dark:active:bg-gray-600 text-gray-700 dark:text-gray-300 dark:hover:bg-linkedin-darkBlue"
+            >
+              Skills
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
+
       </Tabs>
-      
+
+
+
       {/* Posts */}
       {filteredPosts.map((post) => (
         <div key={post.id} className="linkedin-card">
@@ -308,26 +343,26 @@ const Feed = () => {
                 <MoreHorizontal className="h-5 w-5 text-gray-500 dark:text-gray-400" />
               </button>
             </div>
-            
+
             <div className="mt-3">
               <p className="text-sm whitespace-pre-line">{post.content}</p>
             </div>
-            
+
             {post.image && (
               <div className="mt-3">
-                <img 
-                  src={post.image} 
-                  alt="Post attachment" 
+                <img
+                  src={post.image}
+                  alt="Post attachment"
                   className="rounded-lg w-full object-cover max-h-[350px]"
                 />
               </div>
             )}
-            
+
             <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
               <div className="flex justify-between">
                 <Popover>
                   <PopoverTrigger asChild>
-                    <button 
+                    <button
                       className={`flex items-center ${getReactionColor(post.id)} hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue`}
                     >
                       {React.createElement(getReactionIcon(post.id), { className: "h-5 w-5 mr-1" })}
@@ -339,35 +374,34 @@ const Feed = () => {
                       {reactionTypes.map((reaction) => (
                         <button
                           key={reaction.type}
-                          className={`p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-all transform hover:scale-110 ${
-                            reactions[post.id] === reaction.type ? reaction.color : ''
-                          }`}
+                          className={`p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-all transform hover:scale-110 ${reactions[post.id] === reaction.type ? reaction.color : ''
+                            }`}
                           onClick={() => handleReact(post.id, reaction.type)}
                         >
-                          {React.createElement(reaction.icon, { 
-                            className: "h-6 w-6", 
-                            fill: reactions[post.id] === reaction.type ? "currentColor" : "none" 
+                          {React.createElement(reaction.icon, {
+                            className: "h-6 w-6",
+                            fill: reactions[post.id] === reaction.type ? "currentColor" : "none"
                           })}
                         </button>
                       ))}
                     </div>
                   </PopoverContent>
                 </Popover>
-                <button 
+                <button
                   className="flex items-center text-gray-500 dark:text-gray-400 hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue"
                   onClick={() => toggleComments(post.id)}
                 >
                   <MessageSquare className="h-5 w-5 mr-1" />
                   <span className="text-xs">{getPostComments(post.id).length}</span>
                 </button>
-                <button 
+                <button
                   className={`flex items-center ${repostedPosts[post.id] ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : 'text-gray-500 dark:text-gray-400'} hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue`}
                   onClick={() => handleRepost(post.id)}
                 >
                   <RepeatIcon className="h-5 w-5 mr-1" />
                   <span className="text-xs">Repost</span>
                 </button>
-                <button 
+                <button
                   className={`flex items-center ${savedPosts[post.id] ? 'text-linkedin-blue dark:text-linkedin-lightBlue' : 'text-gray-500 dark:text-gray-400'} hover:text-linkedin-blue dark:hover:text-linkedin-lightBlue`}
                   onClick={() => handleSave(post.id)}
                 >
@@ -397,11 +431,11 @@ const Feed = () => {
                       </div>
                     </div>
                   ))}
-                  
+
                   {/* Add Comment */}
                   <div className="flex space-x-2 mt-2">
                     <Avatar className="h-8 w-8 flex-shrink-0">
-                      <AvatarImage src="https://images.unsplash.com/photo-1501286353178-1ec881214838?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80" alt="Zero" />
+                      <AvatarImage src="https://avatars.githubusercontent.com/u/124599?v=4" alt="Zero" />
                       <AvatarFallback>Z</AvatarFallback>
                     </Avatar>
                     <div className="flex-1 flex space-x-2">

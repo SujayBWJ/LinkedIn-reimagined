@@ -19,14 +19,14 @@ const LeftSidebar = () => {
       <div className="linkedin-card overflow-hidden">
         <div className="h-16 bg-gradient-to-r from-linkedin-blue to-linkedin-lightBlue"></div>
         <div className="p-4 relative">
-          <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 border-4 border-white dark:border-linkedin-darkGrey rounded-full">
+          <div className="absolute -top-8 left-1/4 transform -translate-x-1/2 border-4 border-white dark:border-linkedin-darkGrey rounded-full">
             <Avatar className="h-16 w-16">
-              <AvatarImage src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80" alt="John Doe" />
+              <AvatarImage src="https://avatars.githubusercontent.com/u/124599?v=4" alt="Zero" />
               <AvatarFallback className="bg-linkedin-blue text-white">JD</AvatarFallback>
             </Avatar>
           </div>
-          <div className="mt-8 text-center">
-            <h3 className="font-semibold text-lg">John Doe</h3>
+          <div className="mt-8 text-left">
+            <h3 className="font-semibold text-lg">Zero</h3>
             <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
               Software Engineer at Tech Company
             </p>

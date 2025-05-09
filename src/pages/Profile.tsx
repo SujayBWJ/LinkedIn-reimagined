@@ -43,7 +43,7 @@ const Profile = () => {
     company: 'Tech Innovations Inc.',
     location: 'San Francisco, CA',
     connections: 586,
-    avatar: 'https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80',
+    avatar: 'https://avatars.githubusercontent.com/u/124599?v=4',
     about: 'Passionate software engineer with 5+ years of experience in full-stack development. Currently working on AI-powered solutions at Tech Innovations Inc. Previously at Global Tech and StartupX. Graduate of Computer Science from Stanford University.\n\nMy focus areas include distributed systems, cloud architecture, and machine learning applications. I believe in writing clean, maintainable code and continuously learning new technologies to stay at the cutting edge of software development.\n\nOutside of work, I contribute to open source projects and mentor junior developers. I\'m also an avid hiker and amateur photographer.',
     experience: [
       {
@@ -51,7 +51,7 @@ const Profile = () => {
         title: 'Senior Software Engineer',
         company: 'Tech Innovations Inc.',
         logo: 'TI',
-        location: 'San Francisco, CA',
+        location: 'PESCE,Mandya, KA',
         startDate: 'January 2023',
         endDate: 'Present',
         description: 'Leading the development of AI-powered solutions for enterprise customers. Managing a team of 5 engineers and collaborating with product and design teams to deliver high-quality software products.',
@@ -68,7 +68,7 @@ const Profile = () => {
         title: 'Software Engineer',
         company: 'Global Tech',
         logo: 'GT',
-        location: 'San Francisco, CA',
+        location: 'PESCE,Mandya, KA',
         startDate: 'March 2020',
         endDate: 'December 2022',
         description: 'Developed and maintained web applications using React, Node.js, and MongoDB. Implemented CI/CD pipelines and improved performance by 40%.',
@@ -525,7 +525,7 @@ const Profile = () => {
           <Card>
             <div className="h-32 bg-gradient-to-r from-linkedin-blue to-blue-400 relative">
               <Button variant="outline" size="sm" className="absolute top-4 right-4 bg-white hover:bg-gray-100">
-                <Pencil className="h-4 w-4 mr-1" /> Edit Cover
+                <Pencil  /> 
               </Button>
             </div>
             <CardContent className="pt-0">
@@ -557,7 +557,7 @@ const Profile = () => {
                       <div className="flex items-center">
                         <Link2 className="h-4 w-4 mr-1" />
                         <a href="#" className="text-linkedin-blue dark:text-linkedin-lightBlue hover:underline">
-                          linkedin.com/in/johndoe
+                          linkedin.com/in/Zero
                         </a>
                       </div>
                     </div>
@@ -569,8 +569,8 @@ const Profile = () => {
                 </div>
                 
                 <div className="mt-4 md:mt-0 flex space-x-3">
-                  <Button className="bg-linkedin-blue hover:bg-linkedin-darkBlue text-white">Message</Button>
-                  <Button variant="outline">More</Button>
+                  <Button className="bg-linkedin-blue hover:bg-linkedin-darkBlue text-white">More</Button>
+                  
                 </div>
               </div>
             </CardContent>
